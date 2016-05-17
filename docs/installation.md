@@ -26,7 +26,7 @@ Plugin::load('Api');
 Or execute the following cake command:
 
 ```
-$ bin/cake plugin install Api
+$ bin/cake plugin install -b -r Api
 ```
 
 ## Configuring the controller

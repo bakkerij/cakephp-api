@@ -13,6 +13,11 @@
  */
 
 use Cake\Core\Configure;
+use Cake\Core\Plugin;
+
+if(!Plugin::loaded('Crud')) {
+    Plugin::load('Crud');
+}
 
 Configure::write('Api.DefaultTransformer', 'Api.Default');
 
