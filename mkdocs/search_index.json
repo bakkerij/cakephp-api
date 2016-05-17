@@ -1,0 +1,144 @@
+{
+    "docs": [
+        {
+            "location": "/", 
+            "text": "Welcome to CakePHP API Plugin\n\n\nWhat is the API plugin?\n\n\nThe API plugin offers you all tools you need to create an RESTful API with the CakePHP framework.\nIt's built on top of proven technologies:\n\n\n\n\nCakePHP 3.x\n\n\nLeague/Fractal\n\n\nCRUD\n\n\n\n\nGoals\n\n\n\n\nUse proven technologies, so don't reinvent the wheel\n\n\nDo as much as possible for the developer, but keep maximum customizability\n\n\nWork with standards like HAL and JSON-API but also allow custom serialization\n\n\nSupport the pagination of data results, for small and large data sets alike\n\n\n\n\nQuestions?\n\n\nYou can get in touch via \nGitter\n. Other questions or issues can be issued \nhere\n.", 
+            "title": "Home"
+        }, 
+        {
+            "location": "/#welcome-to-cakephp-api-plugin", 
+            "text": "", 
+            "title": "Welcome to CakePHP API Plugin"
+        }, 
+        {
+            "location": "/#what-is-the-api-plugin", 
+            "text": "The API plugin offers you all tools you need to create an RESTful API with the CakePHP framework.\nIt's built on top of proven technologies:   CakePHP 3.x  League/Fractal  CRUD", 
+            "title": "What is the API plugin?"
+        }, 
+        {
+            "location": "/#goals", 
+            "text": "Use proven technologies, so don't reinvent the wheel  Do as much as possible for the developer, but keep maximum customizability  Work with standards like HAL and JSON-API but also allow custom serialization  Support the pagination of data results, for small and large data sets alike", 
+            "title": "Goals"
+        }, 
+        {
+            "location": "/#questions", 
+            "text": "You can get in touch via  Gitter . Other questions or issues can be issued  here .", 
+            "title": "Questions?"
+        }, 
+        {
+            "location": "/installation/", 
+            "text": "Installation\n\n\nIn this section we will explain how to install this plugin.\n\n\nRequirements\n\n\n\n\nCakePHP 3.2+\n\n\nPHP 5.5.9+\n\n\n\n\nUsing Composer\n\n\nThe recommended installation method for this plugin is by using composer.\n\n\n$ composer require cakeplugins/api\n\n\n\n\n\nLoading the plugin\n\n\nAdd the following to your /config/bootstrap.php\n\n\nPlugin\n:\n:load\n(\nApi\n);\n\n\n\n\n\n\nOr execute the following cake command:\n\n\n$ bin/cake plugin install -b -r Api\n\n\n\n\n\nConfiguring the controller\n\n\nThe Api Plugin provides a trait wich should be used in your controller. It's recommended to add this code in your \nAppController\n:\n\n\nnamespace App\\Controller;\n\nclass AppController extends Controller\n{\n    use Api\\Controller\\ApiControllerTrait;\n\n}\n\n\n\n\n\n\n\nTo have the API just scaffold a single controller you can just add the \nApiControllerTrait\n to that specific controller.\n\n\n\n\nAdding the \nApiControllerTrait\n itself do not enable the API Builder, but simply installs the code to handle the \n\\Cake\\Error\\MissingActionException\n\nexception which is called if the action method (like \nindex\n) does not exist.\n\n\nNow you have to load the \nApiBuilder\n component in the controller. Example:\n\n\nclass\n \nAppController\n \nextends\n \n\\\nCake\n\\\nController\n\\\nController\n\n\n{\n\n    \nuse\n \nApi\n\\\nController\n\\\nApiControllerTrait\n;\n\n\n    \npublic\n \nfunction\n \ninitialize\n()\n\n    \n{\n\n        \nparent\n::\ninitialize\n();\n\n\n        \n$\nthis\n-\nloadComponent\n(\nApi.ApiBuilder\n,\n \n[\n\n            \nactions\n \n=\n \n[\n\n                \nindex\n \n=\n \nApi.Index\n,\n\n                \nview\n \n=\n \nApi.View\n,\n\n                \nadd\n \n=\n \nApi.Add\n\n                \nedit\n \n=\n \nApi.Edit\n,\n\n                \ndelete\n \n=\n \nApi.Delete\n,\n\n            \n]\n\n        \n]);\n\n    \n}\n\n\n}", 
+            "title": "Installation"
+        }, 
+        {
+            "location": "/installation/#installation", 
+            "text": "In this section we will explain how to install this plugin.", 
+            "title": "Installation"
+        }, 
+        {
+            "location": "/installation/#requirements", 
+            "text": "CakePHP 3.2+  PHP 5.5.9+", 
+            "title": "Requirements"
+        }, 
+        {
+            "location": "/installation/#using-composer", 
+            "text": "The recommended installation method for this plugin is by using composer.  $ composer require cakeplugins/api", 
+            "title": "Using Composer"
+        }, 
+        {
+            "location": "/installation/#loading-the-plugin", 
+            "text": "Add the following to your /config/bootstrap.php  Plugin : :load ( Api );   Or execute the following cake command:  $ bin/cake plugin install -b -r Api", 
+            "title": "Loading the plugin"
+        }, 
+        {
+            "location": "/installation/#configuring-the-controller", 
+            "text": "The Api Plugin provides a trait wich should be used in your controller. It's recommended to add this code in your  AppController :  namespace App\\Controller;\n\nclass AppController extends Controller\n{\n    use Api\\Controller\\ApiControllerTrait;\n\n}   To have the API just scaffold a single controller you can just add the  ApiControllerTrait  to that specific controller.   Adding the  ApiControllerTrait  itself do not enable the API Builder, but simply installs the code to handle the  \\Cake\\Error\\MissingActionException \nexception which is called if the action method (like  index ) does not exist.  Now you have to load the  ApiBuilder  component in the controller. Example:  class   AppController   extends   \\ Cake \\ Controller \\ Controller  { \n     use   Api \\ Controller \\ ApiControllerTrait ; \n\n     public   function   initialize () \n     { \n         parent :: initialize (); \n\n         $ this - loadComponent ( Api.ApiBuilder ,   [ \n             actions   =   [ \n                 index   =   Api.Index , \n                 view   =   Api.View , \n                 add   =   Api.Add \n                 edit   =   Api.Edit , \n                 delete   =   Api.Delete , \n             ] \n         ]); \n     }  }", 
+            "title": "Configuring the controller"
+        }, 
+        {
+            "location": "/quick-start/", 
+            "text": "Quick Start\n\n\nIn this section we will show a quick example of the use of the plugin.\n\n\nAfter \ninstallation\n, you are ready to create your API endpoints.\n\n\nRouting\n\n\nAdd the following to your \nconfig/routes.php\n to enable RESTful routing for your API:\n\n\nRouter::scope(\n/\n, function (RouteBuilder \n$\nroutes\n) \n{\n\n\n    \n$\nroutes\n-\nextensions([\njson\n]);\n\n\n    \n$\nroutes\n-\nresources(\nblogs\n);\n\n\n});\n\n\n\n\n\n\nApiBuilder Component\n\n\nTo get started you need to load the \nApiBuilder\n component:\n\n\nclass\n \nBlogsController\n \nextends\n \nAppController\n\n\n{\n\n    \nuse\n \nApi\n\\\nController\n\\\nApiControllerTrait\n;\n\n\n    \npublic\n \nfunction\n \ninitialize\n()\n\n    \n{\n\n        \nparent\n::\ninitialize\n();\n\n\n        \n$\nthis\n-\nloadComponent\n(\nApi.ApiBuilder\n,\n \n[\n\n            \nactions\n \n=\n \n[\n\n                \nindex\n \n=\n \nApi.Index\n,\n\n                \nview\n \n=\n \nApi.View\n,\n\n                \nadd\n \n=\n \nApi.Add\n\n                \nedit\n \n=\n \nApi.Edit\n,\n\n                \ndelete\n \n=\n \nApi.Delete\n,\n\n            \n]\n\n        \n]);\n\n    \n}\n\n\n}\n\n\n\n\n\n\nThe following settings can be passed through the component:\n\n\n\n\nactions\n - Array of actions with its mappings. So when the \nindex\n action is requested, the \nIndexAction\n of the API plugin is used.\n\n\nserializer\n - Namespace of the serializer to use. Default \nLeague\\Fractal\\Serializer\\DataArraySerializer\n.\n\n\npaginator\n - Paginator to use (for Fractal). Default \nApi\\Pagination\\CakePaginatorAdapter\n.\n\n\nlisteners\n - Array of listeners to implement.\n\n\n\n\nTransformers\n\n\nTransformers are classes, which are responsible for taking one instance of the resource data and converting it to a basic array. Transformers are implemented by \nFractal\n.\n\n\nIf you want a hand-on, we recommend to use this query first to build up your \nblogs\n table...:\n\n\nCREATE TABLE `blogs` (\n    `id` INT(11) NOT NULL AUTO_INCREMENT,\n    `title` VARCHAR(255) NULL DEFAULT NULL,\n    `body` TEXT NULL,\n    `author` VARCHAR(255) NULL DEFAULT NULL,\n    `created` DATETIME NULL DEFAULT NULL,\n    `modified` DATETIME NULL DEFAULT NULL,\n    PRIMARY KEY (`id`)\n);\n\n\n\n\n\n... And quickely build your model:\n\n\n$ bin/cake bake model Blogs\n\n\n\n\n\nYou can easily create your first transformer with \ncake bake\n:\n\n\n$ bin/cake bake transformer Blog\n\n\n\n\n\nYou can see that the \nBlogTransformer\n class has the following method:\n\n\nnamespace App\\Transformer;\n\n\n\nclass BlogTransformer extends Transformer\n\n\n{\n\n\n\n    /**\n\n\n     * Transformer\n\n\n     *\n\n\n     * @param Blog \n$\nentity\n Item.\n\n\n     * @return array\n\n\n     */\n\n\n    public function transform(Blog \n$\nentity\n)\n\n\n    \n{\n\n\n        return[\n\n\n            \nid\n =\n \n$\nentity\n-\nget(\nid\n),\n\n\n            \nname\n =\n \n$\nentity\n-\nget(\nname\n),\n\n\n            \nbody\n =\n \n$\nentity\n-\nget(\nbody\n),\n\n\n            \ncategory_id\n =\n \n$\nentity\n-\nget(\ncategory_id\n),\n\n\n            \ncreated\n =\n \n$\nentity\n-\nget(\ncreated\n),\n\n\n            \nmodified\n =\n \n$\nentity\n-\nget(\nmodified\n),\n\n\n        ];\n\n\n    }\n\n\n\n}\n\n\n\n\n\n\nThe good thing about Transformers is that they are the \u201cbarrier\u201d between source data and output. That means that schema changes do not affect users.\nYou are free to choose the structure of the result of your \ntransform\n method.\n\n\n\n\nNote: Want to read more about Transformers? \nCheck out the possibilities here!\n\n\n\n\nSerializers\n\n\nSerializers are another great thing of \nFractal\n. They structure your transformed data in certain ways.\nThere are 3 serializers available:\n\n\n\n\nDataArraySerializer\n - The default serializer. It adds a \ndata\n namespace to the output:\n\n\n\n\n// Item\n[\n    \ndata\n =\n [\n        \nfoo\n =\n \nbar\n\n    ],\n];\n\n// Collection\n[\n    \ndata\n =\n [\n        [\n            \nfoo\n =\n \nbar\n\n        ]\n    ],\n];\n\n\n\n\n\n\n\nArraySerializer\n - Sometimes people want to remove that 'data' namespace for items, which can be done by this serializer. \nThis is mostly the same, other than that namespace for items. Collections keep the 'data' namespace to avoid confusing JSON when meta data is added.\n\n\n\n\n// Item\n[\n    \nfoo\n =\n \nbar\n\n];\n\n// Collection\n[\n    \ndata\n =\n [\n        \nfoo\n =\n \nbar\n\n    ]\n];\n\n\n\n\n\n\n\nJsonApiSerializer\n - This is a representation of the \nJSON-API standard (v1.0)\n which is very great. Output looks like:\n\n\n\n\n// Item\n[\n    \ndata\n =\n [\n        \ntype\n =\n \nbooks\n,\n        \nid\n =\n 1,\n        \nattributes\n =\n [\n            \nfoo\n =\n \nbar\n\n        ],\n    ],\n];\n\n// Collection\n[\n    \ndata\n =\n [\n        [\n            \ntype\n =\n \nbooks\n,\n            \nid\n =\n 1,\n            \nattributes\n =\n [\n                \nfoo\n =\n \nbar\n\n            ],\n        ]\n    ],\n];\n\n\n\n\n\nYou can set the serializer you want via the \nApiBuilder\n:\n\n\n$\nthis\n-\nloadComponent(\nApi.ApiBuilder\n, [\n\n\n    \nserializer\n =\n League\\Fractal\\Serializer\\JsonApiSerializer::class\n\n\n]);\n\n\n\n\n\n\n\n\nNote: Want to read more about Serializers? \nCheck out the possibilities here!\n\n\n\n\nResult\n\n\nYou've added the \nApiBuilder\n component to the controller, you've created the transformer, and chose your serializer. You are ready to go!", 
+            "title": "Quick Start"
+        }, 
+        {
+            "location": "/quick-start/#quick-start", 
+            "text": "In this section we will show a quick example of the use of the plugin.  After  installation , you are ready to create your API endpoints.", 
+            "title": "Quick Start"
+        }, 
+        {
+            "location": "/quick-start/#routing", 
+            "text": "Add the following to your  config/routes.php  to enable RESTful routing for your API:  Router::scope( / , function (RouteBuilder  $ routes )  {       $ routes - extensions([ json ]);       $ routes - resources( blogs );  });", 
+            "title": "Routing"
+        }, 
+        {
+            "location": "/quick-start/#apibuilder-component", 
+            "text": "To get started you need to load the  ApiBuilder  component:  class   BlogsController   extends   AppController  { \n     use   Api \\ Controller \\ ApiControllerTrait ; \n\n     public   function   initialize () \n     { \n         parent :: initialize (); \n\n         $ this - loadComponent ( Api.ApiBuilder ,   [ \n             actions   =   [ \n                 index   =   Api.Index , \n                 view   =   Api.View , \n                 add   =   Api.Add \n                 edit   =   Api.Edit , \n                 delete   =   Api.Delete , \n             ] \n         ]); \n     }  }   The following settings can be passed through the component:   actions  - Array of actions with its mappings. So when the  index  action is requested, the  IndexAction  of the API plugin is used.  serializer  - Namespace of the serializer to use. Default  League\\Fractal\\Serializer\\DataArraySerializer .  paginator  - Paginator to use (for Fractal). Default  Api\\Pagination\\CakePaginatorAdapter .  listeners  - Array of listeners to implement.", 
+            "title": "ApiBuilder Component"
+        }, 
+        {
+            "location": "/quick-start/#transformers", 
+            "text": "Transformers are classes, which are responsible for taking one instance of the resource data and converting it to a basic array. Transformers are implemented by  Fractal .  If you want a hand-on, we recommend to use this query first to build up your  blogs  table...:  CREATE TABLE `blogs` (\n    `id` INT(11) NOT NULL AUTO_INCREMENT,\n    `title` VARCHAR(255) NULL DEFAULT NULL,\n    `body` TEXT NULL,\n    `author` VARCHAR(255) NULL DEFAULT NULL,\n    `created` DATETIME NULL DEFAULT NULL,\n    `modified` DATETIME NULL DEFAULT NULL,\n    PRIMARY KEY (`id`)\n);  ... And quickely build your model:  $ bin/cake bake model Blogs  You can easily create your first transformer with  cake bake :  $ bin/cake bake transformer Blog  You can see that the  BlogTransformer  class has the following method:  namespace App\\Transformer;  class BlogTransformer extends Transformer  {      /**       * Transformer       *       * @param Blog  $ entity  Item.       * @return array       */      public function transform(Blog  $ entity )       {          return[               id  =   $ entity - get( id ),               name  =   $ entity - get( name ),               body  =   $ entity - get( body ),               category_id  =   $ entity - get( category_id ),               created  =   $ entity - get( created ),               modified  =   $ entity - get( modified ),          ];      }  }   The good thing about Transformers is that they are the \u201cbarrier\u201d between source data and output. That means that schema changes do not affect users.\nYou are free to choose the structure of the result of your  transform  method.   Note: Want to read more about Transformers?  Check out the possibilities here!", 
+            "title": "Transformers"
+        }, 
+        {
+            "location": "/quick-start/#serializers", 
+            "text": "Serializers are another great thing of  Fractal . They structure your transformed data in certain ways.\nThere are 3 serializers available:   DataArraySerializer  - The default serializer. It adds a  data  namespace to the output:   // Item\n[\n     data  =  [\n         foo  =   bar \n    ],\n];\n\n// Collection\n[\n     data  =  [\n        [\n             foo  =   bar \n        ]\n    ],\n];   ArraySerializer  - Sometimes people want to remove that 'data' namespace for items, which can be done by this serializer. \nThis is mostly the same, other than that namespace for items. Collections keep the 'data' namespace to avoid confusing JSON when meta data is added.   // Item\n[\n     foo  =   bar \n];\n\n// Collection\n[\n     data  =  [\n         foo  =   bar \n    ]\n];   JsonApiSerializer  - This is a representation of the  JSON-API standard (v1.0)  which is very great. Output looks like:   // Item\n[\n     data  =  [\n         type  =   books ,\n         id  =  1,\n         attributes  =  [\n             foo  =   bar \n        ],\n    ],\n];\n\n// Collection\n[\n     data  =  [\n        [\n             type  =   books ,\n             id  =  1,\n             attributes  =  [\n                 foo  =   bar \n            ],\n        ]\n    ],\n];  You can set the serializer you want via the  ApiBuilder :  $ this - loadComponent( Api.ApiBuilder , [       serializer  =  League\\Fractal\\Serializer\\JsonApiSerializer::class  ]);    Note: Want to read more about Serializers?  Check out the possibilities here!", 
+            "title": "Serializers"
+        }, 
+        {
+            "location": "/quick-start/#result", 
+            "text": "You've added the  ApiBuilder  component to the controller, you've created the transformer, and chose your serializer. You are ready to go!", 
+            "title": "Result"
+        }, 
+        {
+            "location": "/actions/", 
+            "text": "Actions\n\n\nThe following actions are provided by the Api Plugin:\n\n\nApi.Index\n\n\nThis will give you a (full) collection of items.\n\n\nApi.View\n\n\nThis will return a single item.\n\n\nApi.Add\n\n\nThis will add an item.\n\n\n\n\nNot implemented properly yet...\n\n\n\n\nApi.Edit\n\n\nThis will modify/edit an item.\n\n\n\n\nNot implemented properly yet...\n\n\n\n\nApi.Delete\n\n\nThis will delete the item.\n\n\n\n\nNot implemented properly yet...\n\n\n\n\nFurther Reading\n\n\nRead more about actions \nhere", 
+            "title": "Actions"
+        }, 
+        {
+            "location": "/actions/#actions", 
+            "text": "The following actions are provided by the Api Plugin:", 
+            "title": "Actions"
+        }, 
+        {
+            "location": "/actions/#apiindex", 
+            "text": "This will give you a (full) collection of items.", 
+            "title": "Api.Index"
+        }, 
+        {
+            "location": "/actions/#apiview", 
+            "text": "This will return a single item.", 
+            "title": "Api.View"
+        }, 
+        {
+            "location": "/actions/#apiadd", 
+            "text": "This will add an item.   Not implemented properly yet...", 
+            "title": "Api.Add"
+        }, 
+        {
+            "location": "/actions/#apiedit", 
+            "text": "This will modify/edit an item.   Not implemented properly yet...", 
+            "title": "Api.Edit"
+        }, 
+        {
+            "location": "/actions/#apidelete", 
+            "text": "This will delete the item.   Not implemented properly yet...", 
+            "title": "Api.Delete"
+        }, 
+        {
+            "location": "/actions/#further-reading", 
+            "text": "Read more about actions  here", 
+            "title": "Further Reading"
+        }, 
+        {
+            "location": "/events/", 
+            "text": "Events\n\n\nThis documentation will be expanded soon. For now you can take a look at http://crud.readthedocs.io/en/latest/events.html.", 
+            "title": "Events"
+        }, 
+        {
+            "location": "/events/#events", 
+            "text": "This documentation will be expanded soon. For now you can take a look at http://crud.readthedocs.io/en/latest/events.html.", 
+            "title": "Events"
+        }
+    ]
+}
