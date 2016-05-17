@@ -52,7 +52,7 @@ class CakePaginatorAdapter implements PaginatorInterface
      */
     public function getCurrentPage()
     {
-        return $this->request->param('paging.'.$this->pagingType.'.page');
+        return $this->request->param('paging.' . $this->pagingType . '.page');
     }
 
     /**
@@ -62,7 +62,7 @@ class CakePaginatorAdapter implements PaginatorInterface
      */
     public function getLastPage()
     {
-        return $this->request->param('paging.'.$this->pagingType.'.pageCount');
+        return $this->request->param('paging.' . $this->pagingType . '.pageCount');
     }
 
     /**
@@ -72,7 +72,7 @@ class CakePaginatorAdapter implements PaginatorInterface
      */
     public function getTotal()
     {
-        return $this->request->param('paging.'.$this->pagingType.'.count');
+        return $this->request->param('paging.' . $this->pagingType . '.count');
     }
 
     /**
@@ -82,7 +82,7 @@ class CakePaginatorAdapter implements PaginatorInterface
      */
     public function getCount()
     {
-            return $this->request->param('paging.'.$this->pagingType.'.count');
+        return $this->request->param('paging.' . $this->pagingType . '.current');
     }
 
     /**
@@ -92,7 +92,7 @@ class CakePaginatorAdapter implements PaginatorInterface
      */
     public function getPerPage()
     {
-        return $this->request->param('paging.'.$this->pagingType.'.perPage');
+        return $this->request->param('paging.' . $this->pagingType . '.perPage');
     }
 
     /**

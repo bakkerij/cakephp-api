@@ -2,12 +2,18 @@
 
 namespace Api\Action;
 
-use Cake\Routing\DispatcherFactory;
-use Cake\Routing\Router;
+use App\Transformer\CategoryTransformer;
+use Crud\Traits\FindMethodTrait;
+use Crud\Traits\SerializeTrait;
+use Crud\Traits\ViewTrait;
+use Crud\Traits\ViewVarTrait;
 
 class IndexAction extends Action
 {
-
+    use FindMethodTrait;
+    use SerializeTrait;
+    use ViewTrait;
+    use ViewVarTrait;
     /**
      * Default configuration
      *
@@ -15,27 +21,30 @@ class IndexAction extends Action
      */
     protected $_defaultConfig = [
         'enabled' => true,
+        'scope' => 'table',
         'findMethod' => 'all',
+        'serialize' => [],
     ];
 
     /**
-     * Execute the index action
+     * Generic handler for all HTTP verbs
      *
      * @return void
      */
-    protected function _execute()
+    protected function _handle()
     {
-        $manager = $this->_fractalManager();
-
         $query = $this->_table()->find($this->findMethod());
+        $subject = $this->_subject(['success' => true, 'query' => $query]);
 
-        if ($this->_api()->config('pagination')) {
-            $query = $this->_controller()->paginate($query);
-        }
+        $this->_trigger('beforePaginate', $subject);
+        $items = $this->_controller()->paginate($subject->query);
+        $subject->set(['entities' => $items]);
 
-        $resource = $this->getResourceCollection($query);
+        $this->_trigger('afterpaginate', $subject);
+        $this->_trigger('beforeRender', $subject);
 
-        $data = $manager->createData($resource)->toArray();
+        $result = $this->collection($subject->entities, 'Category');
+        $data = $this->createData($result)->toArray();
         $this->_controller()->set($data);
     }
 

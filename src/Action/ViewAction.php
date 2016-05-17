@@ -3,9 +3,12 @@
 namespace Api\Action;
 
 use Cake\Routing\RequestActionTrait;
+use Crud\Traits\FindMethodTrait;
 
 class ViewAction extends Action
 {
+
+    use FindMethodTrait;
 
     /**
      * Default configuration
@@ -14,25 +17,28 @@ class ViewAction extends Action
      */
     protected $_defaultConfig = [
         'enabled' => true,
+        'scope' => 'entity',
+        'findMethod' => 'all',
+        'view' => null,
+        'viewVar' => null,
+        'serialize' => []
     ];
 
     /**
      * Execute the index action
      *
-     * @return void
+     * @param null $id
      */
-    protected function _execute()
+    protected function _handle($id = null)
     {
-        $manager = $this->_fractalManager();
+        $subject = $this->_subject();
+        $subject->set(['id' => $id]);
 
-        $id = $this->_controller()->request->param('id');
+        $this->_findRecord($id, $subject);
+        $this->_trigger('beforeRender', $subject);
 
-        $model = $this->_table();
-        $entity = $model->get($id);
-
-        $resource = $this->getResourceItem($entity);
-        $data = $manager->createData($resource)->toArray();
-        $this->config('serialize', array_keys($data));
+        $result = $this->item($subject->entity, 'Category');
+        $data = $this->createData($result)->toArray();
         $this->_controller()->set($data);
     }
 

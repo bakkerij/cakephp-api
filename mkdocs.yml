@@ -1,3 +1,18 @@
 site_name: CakePHP Api Plugin
 
 theme: 'material'
+
+pages:
+  - Home: 'index.md'
+  - Installation: 'installation.md'
+  - Quick Start: 'quick-start.md'
+  - Actions: 'actions.md'
+  - Events: 'events.md'
+
+extra:
+  palette:
+    primary: 'light blue'
+    accent: 'light blue'
+
+markdown_extensions:
+  - codehilite(css_class=code)

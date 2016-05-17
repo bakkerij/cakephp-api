@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CakePlugins (http://cakeplugins.org)
  * Copyright (c) http://cakeplugins.org
@@ -11,9 +12,15 @@
  * @link          http://cakeplugins.org CakePlugins Project
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+namespace Api\Exception;
 
-use Cake\Core\Configure;
+use Cake\Core\Exception\Exception;
 
-Configure::write('Api.DefaultTransformer', 'Api.Default');
+class MissingTransformerException extends Exception
+{
+    /**
+     * {@inheritDoc}
+     */
+    protected $_messageTemplate = 'Transformer %s could not be found, or is not accessible.';
 
-Configure::write('Api.AllowDefaultTransformer', []);
+}
