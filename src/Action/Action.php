@@ -36,6 +36,28 @@ class Action extends BaseAction
     }
 
     /**
+     * Fractals' manager instance.
+     *
+     * @return \League\Fractal\Manager
+     */
+    protected function _fractal()
+    {
+        return $this->_api()->getFractalManager();
+    }
+
+    /**
+     * Get a transformer instance
+     *
+     * @return TransformerAbstract
+     */
+    protected function _transformer()
+    {
+        $class = $this->config('transformer') ?: $this->_table()->alias();
+
+        return $this->_api()->getTransformer($class);
+    }
+
+    /**
      * @param $collection
      * @param string|Transformer $transformer
      * @param callable|null $callable
@@ -66,6 +88,17 @@ class Action extends BaseAction
     public function createData(ResourceInterface $resource)
     {
         return $this->_api()->createData($resource);
+    }
+
+    /**
+     * Sets and/or gets the response status code.
+     *
+     * @param null $code
+     * @return int
+     */
+    public function statusCode($code = null)
+    {
+        return $this->_response()->statusCode($code);
     }
 
     /**

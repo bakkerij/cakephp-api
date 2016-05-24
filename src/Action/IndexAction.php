@@ -43,7 +43,7 @@ class IndexAction extends Action
         $this->_trigger('afterpaginate', $subject);
         $this->_trigger('beforeRender', $subject);
 
-        $result = $this->collection($subject->entities, 'Category');
+        $result = $this->collection($subject->entities, $this->_transformer());
         $data = $this->createData($result)->toArray();
         $this->_controller()->set($data);
     }

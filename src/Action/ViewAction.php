@@ -37,8 +37,9 @@ class ViewAction extends Action
         $this->_findRecord($id, $subject);
         $this->_trigger('beforeRender', $subject);
 
-        $result = $this->item($subject->entity, 'Category');
+        $result = $this->item($subject->entity, $this->_transformer());
         $data = $this->createData($result)->toArray();
+
         $this->_controller()->set($data);
     }
 

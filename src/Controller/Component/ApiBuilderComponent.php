@@ -15,11 +15,16 @@ namespace Api\Controller\Component;
 
 use Api\Exception\MissingTransformerException;
 use Api\Pagination\CakePaginatorAdapter;
+use Api\Parser\ParserAbstract;
+use Api\Traits\TransformerAwareTrait;
 use Api\Transformer\Transformer;
+use Api\Transformer\TransformerAbstract;
 use Cake\Controller\Component;
 use Cake\Controller\ComponentRegistry;
 use Cake\Core\App;
+use Cake\Datasource\ModelAwareTrait;
 use Cake\ORM\ResultSet;
+use Cake\Routing\Router;
 use Cake\Utility\Inflector;
 use League\Fractal\Manager as FractalManager;
 use League\Fractal\Manager;
@@ -37,6 +42,8 @@ use League\Fractal\Serializer\DataArraySerializer;
 class ApiBuilderComponent extends Component
 {
 
+    use TransformerAwareTrait;
+
     /**
      * Component settings
      *
@@ -46,6 +53,9 @@ class ApiBuilderComponent extends Component
         'actions' => [],
         'eventPrefix' => 'Crud',
         'serializer' => DataArraySerializer::class,
+        'recursionLimit' => '10',
+        'baseUrl' => null,
+        'parser' => '',
         'paginator' => CakePaginatorAdapter::class,
     ];
 
@@ -105,11 +115,14 @@ class ApiBuilderComponent extends Component
      */
     public function getFractalManager()
     {
-        if(!$this->_fractalManager) {
+        if (!$this->_fractalManager) {
             $manager = new Manager();
 
             $serializer = $this->config('serializer');
-            $manager->setSerializer(new $serializer);
+            $manager->setSerializer(new $serializer($this->config('baseUrl') ?: Router::fullBaseUrl()));
+
+            $manager->parseIncludes((array)$this->request->query('include'));
+            $manager->setRecursionLimit($this->config('recursionLimit'));
 
             $this->_fractalManager = $manager;
         }
@@ -128,27 +141,6 @@ class ApiBuilderComponent extends Component
     }
 
     /**
-     * Generates instance of the Transformer.
-     *
-     * The method works with the App::className() method.
-     * This means that you can call app-related Transformers like `Books`.
-     * Plugin-related Transformers can be called like `Plugin.Books`
-     *
-     * @param $className
-     * @return Transformer
-     */
-    public function getTransformer($className)
-    {
-        $transformer = App::className(Inflector::classify($className), 'Transformer', 'Transformer');
-
-        if ($transformer === false) {
-            throw new MissingTransformerException(['transformer' => $className]);
-        }
-
-        return new $transformer;
-    }
-
-    /**
      * Transforms the given collection.
      *
      * @param $collection
@@ -158,14 +150,14 @@ class ApiBuilderComponent extends Component
      */
     public function collection($collection, $transformer, callable $callable = null)
     {
-        if(!$transformer instanceof Transformer) {
+        if (!$transformer instanceof TransformerAbstract) {
             $transformer = $this->getTransformer($transformer);
         }
 
-        $resourceKey = $transformer->resourceKey;
+        $resourceKey = $transformer->resourceKey();
         $result = new Collection($collection, $transformer, $resourceKey);
 
-        if($this->config('paginator')) {
+        if ($this->config('paginator')) {
             $result->setPaginator($this->createPaginator());
         }
 
@@ -182,14 +174,24 @@ class ApiBuilderComponent extends Component
      */
     public function item($item, $transformer, array $options = [])
     {
-        if(!$transformer instanceof Transformer) {
+        if (!$transformer instanceof TransformerAbstract) {
             $transformer = $this->getTransformer($transformer);
         }
 
-        $resourceKey = $transformer->resourceKey;
+        $resourceKey = $transformer->resourceKey();
         $result = new Item($item, $transformer, $resourceKey);
 
         return $result;
+    }
+
+    public function getRequestData()
+    {
+        $parser = $this->config('parser');
+        if (!$parser instanceof ParserAbstract) {
+            $parser = new $parser;
+        }
+
+        return (array)$parser->getData($this->request);
     }
 
     /**
@@ -217,5 +219,5 @@ class ApiBuilderComponent extends Component
             $this->_controller->request
         );
     }
-    
+
 }

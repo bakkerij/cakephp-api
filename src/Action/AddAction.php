@@ -14,6 +14,8 @@ class AddAction extends Action
      */
     protected $_defaultConfig = [
         'enabled' => true,
+        'saveMethod' => 'save',
+        'saveOptions' => []
     ];
 
     /**
@@ -23,15 +25,28 @@ class AddAction extends Action
      */
     protected function _post()
     {
-        $manager = $this->_fractalManager();
-        $table = $this->_table();
-        $entity = $this->_entity($this->_request()->data());
+        $manager = $this->_fractal();
 
-        $table->save($entity);
-        $resource = $this->getResourceItem($entity);
-        $data = $manager->createData($resource)->toArray();
-        $this->config('serialize', array_keys($data));
-        $this->_controller()->set($data);
+        $subject = $this->_subject([
+            'entity' => $this->_entity($this->_api()->getRequestData(), $this->config('saveOptions')),
+            'saveMethod' => $this->config('saveMethod'),
+            'saveOptions' => $this->config('saveOptions')
+        ]);
+
+        $this->_trigger('beforeSave', $subject);
+        $saveCallback = [$this->_table(), $subject->saveMethod];
+
+        if (call_user_func($saveCallback, $subject->entity, $subject->saveOptions)) {
+            $this->statusCode(201);
+
+            $resource = $this->item($subject->entity, $this->_transformer());
+            $data = $manager->createData($resource)->toArray();
+            $this->_controller()->set($data);
+        } else {
+            $this->statusCode(400);
+
+            $this->_controller()->set('errors', $subject->entity->errors());
+        }
     }
 
     protected function _put()

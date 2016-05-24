@@ -2,8 +2,12 @@
 
 namespace Api\Action;
 
+use Crud\Traits\FindMethodTrait;
+
 class EditAction extends Action
 {
+
+    use FindMethodTrait;
 
     /**
      * Default configuration
@@ -12,6 +16,9 @@ class EditAction extends Action
      */
     protected $_defaultConfig = [
         'enabled' => true,
+        'findMethod' => 'all',
+        'saveMethod' => 'save',
+        'saveOptions' => []
     ];
 
     /**
@@ -19,20 +26,36 @@ class EditAction extends Action
      *
      * @return void
      */
-    protected function _put()
+    protected function _put($id = null)
     {
-        $manager = $this->_fractalManager();
-        $id = $this->_controller()->request->param('id');
-        $table = $this->_table();
-        $entity = $table = $table->get($id);
+        $manager = $this->_fractal();
 
-        $entity = $table->patchEntity($entity, $this->_request()->data());
+        $subject = $this->_subject([
+            'id' => $id,
+            'saveMethod' => $this->config('saveMethod'),
+            'saveOptions' => $this->config('saveOptions')
+        ]);
 
-        $table->save($entity);
-        $resource = $this->getResourceItem($entity);
-        $data = $manager->createData($resource)->toArray();
-        $this->config('serialize', array_keys($data));
-        $this->_controller()->set($data);
+        $entity = $this->_table()->patchEntity(
+            $this->_findRecord($id, $subject),
+            $this->_api()->getRequestData(),
+            $this->config('saveOptions')
+        );
+
+        $this->_trigger('beforeSave', $subject);
+        $saveCallback = [$this->_table(), $subject->saveMethod];
+
+        if (call_user_func($saveCallback, $entity, $subject->saveOptions)) {
+            $this->statusCode(200);
+
+            $resource = $this->item($subject->entity, $this->_transformer());
+            $data = $manager->createData($resource)->toArray();
+            $this->_controller()->set($data);
+        } else {
+            $this->statusCode(400);
+
+            $this->_controller()->set('errors', $subject->entity->errors());
+        }
     }
 
     protected function _post()

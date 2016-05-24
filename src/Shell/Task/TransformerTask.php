@@ -21,6 +21,7 @@ class TransformerTask extends SimpleBakeTask
     {
         $this->BakeTemplate->set('entity_namespace', $this->entity_namespace($name));
         $this->BakeTemplate->set('columns', $this->columns($name));
+        $this->BakeTemplate->set('resourceKey', $this->resourceKey($name));
 
         parent::main($name);
     }
@@ -44,12 +45,12 @@ class TransformerTask extends SimpleBakeTask
     public function entity_namespace($name)
     {
         $class = '';
-        $class .= ($this->plugin ? $this->plugin.'' : '');
+        $class .= ($this->plugin ? $this->plugin . '' : '');
         $class .= Inflector::singularize($name);
 
         $namespace = App::className($class, 'Model/Entity');
 
-        if(!$namespace) {
+        if (!$namespace) {
             $namespace = 'array';
         }
 
@@ -59,7 +60,7 @@ class TransformerTask extends SimpleBakeTask
     /**
      * Return list of columns.
      *
-     * @param $name
+     * @param string $name Name.
      * @return array
      */
     public function columns($name)
@@ -67,6 +68,17 @@ class TransformerTask extends SimpleBakeTask
         $table = TableRegistry::get(Inflector::pluralize($name));
         $columns = $table->schema()->columns();
         return $columns;
+    }
+
+    /**
+     * Return resource key.
+     *
+     * @param string $name Name.
+     * @return string
+     */
+    public function resourceKey($name)
+    {
+        return Inflector::pluralize(Inflector::dasherize($name));
     }
 
     /**
