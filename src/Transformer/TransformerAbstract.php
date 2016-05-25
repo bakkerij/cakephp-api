@@ -14,6 +14,10 @@
 namespace Api\Transformer;
 
 use Api\Traits\TransformerAwareTrait;
+use Cake\Datasource\EntityInterface;
+use Cake\ORM\Table;
+use Cake\ORM\TableRegistry;
+use Cake\Utility\Inflector;
 use League\Fractal\Resource\Collection;
 use League\Fractal\Resource\Item;
 use League\Fractal\TransformerAbstract as FractalTransformerAbstract;
@@ -65,4 +69,20 @@ abstract class TransformerAbstract extends FractalTransformerAbstract
         return parent::collection($collection, $transformer, $resourceKey);
     }
 
+
+    /**
+     * Gets the repository for this entity
+     *
+     * @param EntityInterface $entity
+     * @return Table
+     */
+    protected function _repository($entity)
+    {
+        $source = $entity->source();
+        if ($source === null) {
+            list(, $class) = namespaceSplit(get_class($entity));
+            $source = Inflector::pluralize($class);
+        }
+        return TableRegistry::get($source);
+    }
 }
