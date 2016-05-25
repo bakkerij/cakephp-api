@@ -1,18 +1,46 @@
+# Project information
 site_name: CakePHP Api Plugin
+site_description: 'API Plugin for CakePHP 3.x'
+site_author: 'Bob Mulder'
 
+# Documentation and theme
+docs_dir: 'docs'
 theme: 'material'
 
+# Repository
+repo_name: 'GitHub'
+repo_url: 'https://github.com/cakeplugins/api'
+
+# Copyright
+copyright: 'Copyright (c) 2016 CakePlugins - Bob Mulder'
+
+# Menu
 pages:
   - Home: 'index.md'
   - Installation: 'installation.md'
   - Quick Start: 'quick-start.md'
+  - Api Builder: 'api-builder.md'
   - Actions: 'actions.md'
+  - Transformers: 'transformers.md'
+  - Serializers: 'serializers.md'
+  - Parsers: 'parsers.md'
   - Events: 'events.md'
 
+# Options
 extra:
   palette:
-    primary: 'light blue'
-    accent: 'light blue'
+    primary: 'blue grey'
+    accent: 'grey'
+  logo: 'images/logo.png'
+  author:
+    github: 'cakeplugins'
+    twitter: 'cakeplugins'
 
+# Google Analytics
+google_analytics:
+  - 'UA-60091820-3'
+  - 'auto'
+
+# Extensions
 markdown_extensions:
   - codehilite(css_class=code)

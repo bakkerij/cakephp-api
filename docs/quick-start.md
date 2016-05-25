@@ -17,7 +17,7 @@ Router::scope('/', function (RouteBuilder $routes) {
 
 ## ApiBuilder Component
 
-To get started you need to load the `ApiBuilder` component:
+To get started you need to load the `ApiBuilder` Component:
 
 ```
 class BlogsController extends AppController
@@ -41,12 +41,7 @@ class BlogsController extends AppController
 }
 ```
 
-The following settings can be passed through the component:
-
-- `actions` - Array of actions with its mappings. So when the `index` action is requested, the `IndexAction` of the API plugin is used.
-- `serializer` - Namespace of the serializer to use. Default `League\Fractal\Serializer\DataArraySerializer`.
-- `paginator` - Paginator to use (for Fractal). Default `Api\Pagination\CakePaginatorAdapter`.
-- `listeners` - Array of listeners to implement.
+> Note: Want to read more about the `ApiBuilder` Component? [Check out the possibilities here!](/api-builder.md)
 
 ## Transformers
 

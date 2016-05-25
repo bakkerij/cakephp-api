@@ -40,7 +40,7 @@ class IndexAction extends Action
         $items = $this->_controller()->paginate($subject->query);
         $subject->set(['entities' => $items]);
 
-        $this->_trigger('afterpaginate', $subject);
+        $this->_trigger('afterPaginate', $subject);
         $this->_trigger('beforeRender', $subject);
 
         $result = $this->collection($subject->entities, $this->_transformer());
