@@ -1,24 +1,25 @@
 {
-    "name": "your-name-here/Api",
-    "description": "Api plugin for CakePHP",
-    "type": "cakephp-plugin",
-    "require": {
-        "php": ">=5.4.16",
-        "cakephp/cakephp": "~3.0",
-        "friendsofcake/crud": "4.3"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "*"
-    },
-    "autoload": {
-        "psr-4": {
-            "Api\\": "src"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Api\\Test\\": "tests",
-            "Cake\\Test\\": "./vendor/cakephp/cakephp/tests"
-        }
+  "name": "cakeplugins/api",
+  "description": "Api plugin for CakePHP",
+  "type": "cakephp-plugin",
+  "require": {
+    "php": ">=5.4.16",
+    "cakephp/cakephp": "~3.0",
+    "friendsofcake/crud": "4.3",
+    "league/fractal": "^0.13.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Api\\": "src"
     }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Api\\Test\\": "tests",
+      "Cake\\Test\\": "./vendor/cakephp/cakephp/tests"
+    }
+  }
 }
