@@ -14,13 +14,17 @@
       
       
       
+        <meta name="author" content="Bob Mulder">
+      
     
     <meta property="og:url" content="None">
     <meta property="og:title" content="CakePHP Api Plugin">
-    <meta property="og:image" content="None/../">
+    <meta property="og:image" content="None/../images/logo.png">
     <meta name="apple-mobile-web-app-title" content="CakePHP Api Plugin">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
+      <link rel="apple-touch-icon" href="../images/logo.png">
     
     
     <link rel="shortcut icon" type="image/x-icon" href="../None">
@@ -66,7 +70,10 @@
   
   
   
-  <body class="palette-primary-light-blue palette-accent-light-blue">
+  <body class="palette-primary-blue-grey palette-accent-grey">
+    
+      
+      
     
     <div class="backdrop">
       <div class="backdrop-paper"></div>
@@ -93,6 +100,16 @@
       </div>
     </div>
     
+      
+      <div class="button button-twitter" role="button" aria-label="Twitter">
+        <a href="https://twitter.com/cakeplugins" title="@cakeplugins on Twitter" target="_blank" class="toggle-button icon icon-twitter"></a>
+      </div>
+    
+    
+      
+      <div class="button button-github" role="button" aria-label="GitHub">
+        <a href="https://github.com/cakeplugins" title="@cakeplugins on GitHub" target="_blank" class="toggle-button icon icon-github"></a>
+      </div>
     
     <div class="button button-search" role="button" aria-label="Search">
       <label class="toggle-button icon icon-search" title="Search" for="toggle-search"></label>
@@ -118,8 +135,12 @@
       <div class="drawer">
         <nav aria-label="Navigation">
   
-  <a href="/" class="project">
+  <a href="https://github.com/cakeplugins/api" class="project">
     <div class="banner">
+      
+        <div class="logo">
+          <img src="../images/logo.png">
+        </div>
       
       <div class="name">
         <strong>
@@ -129,11 +150,30 @@
           </span>
         </strong>
         
+          <br>
+          cakeplugins/api
+        
       </div>
     </div>
   </a>
   <div class="scrollable">
     <div class="wrapper">
+      
+        <ul class="repo">
+          <li class="repo-download">
+            
+            <a href="https://github.com/cakeplugins/api/archive/master.zip" target="_blank" title="Download" data-action="download">
+              <i class="icon icon-download"></i> Download
+            </a>
+          </li>
+          <li class="repo-stars">
+            <a href="https://github.com/cakeplugins/api/stargazers" target="_blank" title="Stargazers" data-action="star">
+              <i class="icon icon-star"></i> Stars
+              <span class="count">&ndash;</span>
+            </a>
+          </li>
+        </ul>
+        <hr>
       
       <div class="toc">
         <ul>
@@ -167,6 +207,15 @@
           
             
   <li>
+    <a class="" title="Api Builder" href="../api-builder/">
+      Api Builder
+    </a>
+    
+  </li>
+
+          
+            
+  <li>
     <a class="current" title="Actions" href="./">
       Actions
     </a>
@@ -176,6 +225,18 @@
       
       
         <ul>
+          
+            <li class="anchor">
+              <a title="General methods" href="#general-methods">
+                General methods
+              </a>
+            </li>
+          
+            <li class="anchor">
+              <a title="Fractal related methods" href="#fractal-related-methods">
+                Fractal related methods
+              </a>
+            </li>
           
             <li class="anchor">
               <a title="Api.Index" href="#apiindex">
@@ -221,6 +282,33 @@
           
             
   <li>
+    <a class="" title="Transformers" href="../transformers/">
+      Transformers
+    </a>
+    
+  </li>
+
+          
+            
+  <li>
+    <a class="" title="Serializers" href="../serializers/">
+      Serializers
+    </a>
+    
+  </li>
+
+          
+            
+  <li>
+    <a class="" title="Parsers" href="../parsers/">
+      Parsers
+    </a>
+    
+  </li>
+
+          
+            
+  <li>
     <a class="" title="Events" href="../events/">
       Events
     </a>
@@ -229,6 +317,27 @@
 
           
         </ul>
+        
+          <hr>
+          <span class="section">The author</span>
+          <ul>
+            
+              
+              <li>
+                <a href="https://twitter.com/cakeplugins" target="_blank" title="@cakeplugins on Twitter">
+                  @cakeplugins on Twitter
+                </a>
+              </li>
+            
+            
+              
+              <li>
+                <a href="https://github.com/cakeplugins" target="_blank" title="@cakeplugins on GitHub">
+                  @cakeplugins on GitHub
+                </a>
+              </li>
+            
+          </ul>
         
       </div>
     </div>
@@ -240,28 +349,104 @@
           
           <h1 id="actions">Actions</h1>
 <p>The following actions are provided by the Api Plugin:</p>
+<ul>
+<li><code>Api.Index</code></li>
+<li><code>Api.View</code></li>
+<li><code>Api.Add</code></li>
+<li><code>Api.Edit</code></li>
+<li><code>Api.Delete</code></li>
+</ul>
+<p>You can load those actions when loading the <code>ApiBuilder</code> Component:</p>
+<div class="code"><pre><span></span><span class="x">    </span><span class="p">$</span><span class="nv">this</span><span class="x">-&gt;loadComponent(&#39;Api.ApiBuilder&#39;, [</span>
+<span class="x">        &#39;actions&#39; =&gt; [</span>
+<span class="x">            &#39;index&#39; =&gt; &#39;Api.Index&#39;,</span>
+<span class="x">            &#39;view&#39; =&gt; &#39;Api.View&#39;,</span>
+<span class="x">            &#39;add&#39; =&gt; &#39;Api.Add&#39;</span>
+<span class="x">            &#39;edit&#39; =&gt; &#39;Api.Edit&#39;,</span>
+<span class="x">            &#39;delete&#39; =&gt; &#39;Api.Delete&#39;,</span>
+<span class="x">        ]</span>
+<span class="x">    ]);</span>
+</pre></div>
+
+
+<p>All Action classes extend on the <code>Api\Action\ApiAction</code> class.</p>
+<h2 id="general-methods">General methods</h2>
+<p>The <code>Action</code> classes heve some usefull methods.</p>
+<p>To set a status code you can use the following example:</p>
+<div class="code"><pre><span></span><span class="p">$</span><span class="nv">this</span><span class="x">-&gt;statusCode(201);</span>
+</pre></div>
+
+
+<blockquote>
+<p>Note that all other methods like <code>_table()</code>, <code>_controller()</code>, <code>_request()</code>, and more are all available thanks to the Crud plugin.</p>
+</blockquote>
+<h2 id="fractal-related-methods">Fractal related methods</h2>
+<p>The <code>Manager</code> class of Fractal is accessible with the method:</p>
+<div class="code"><pre><span></span><span class="p">$</span><span class="nv">manager</span><span class="x"> = </span><span class="p">$</span><span class="nv">this</span><span class="x">-&gt;_fractal();</span>
+</pre></div>
+
+
+<p>You can easily get the related Transformer instance like:</p>
+<div class="code"><pre><span></span><span class="p">$</span><span class="nv">transformer</span><span class="x"> = </span><span class="p">$</span><span class="nv">this</span><span class="x">-&gt;_transformer();</span>
+</pre></div>
+
+
+<p>This can be helpful when you want to transform an Item or a Collection:</p>
+<div class="code"><pre><span></span><span class="p">$</span><span class="nv">result</span><span class="x"> = </span><span class="p">$</span><span class="nv">this</span><span class="x">-&gt;collection(</span><span class="p">$</span><span class="nv">data</span><span class="x">, </span><span class="p">$</span><span class="nv">this</span><span class="x">-&gt;_transformer());</span>
+</pre></div>
+
+
+<p>As you see collections and items can be build with the following methods:</p>
+<div class="code"><pre><span></span><span class="x">// Return a collection</span>
+<span class="p">$</span><span class="nv">result</span><span class="x"> = </span><span class="p">$</span><span class="nv">this</span><span class="x">-&gt;collection(</span><span class="p">$</span><span class="nv">data</span><span class="x">, &#39;Blog&#39;);</span>
+
+<span class="x">// Return an item</span>
+<span class="p">$</span><span class="nv">result</span><span class="x"> = </span><span class="p">$</span><span class="nv">this</span><span class="x">-&gt;item(</span><span class="p">$</span><span class="nv">data</span><span class="x">, &#39;Blog&#39;);</span>
+</pre></div>
+
+
+<p>To 'create' the data to a returnable format you can use the <code>createData</code> method like:</p>
+<div class="code"><pre><span></span><span class="p">$</span><span class="nv">data</span><span class="x"> = </span><span class="p">$</span><span class="nv">this</span><span class="x">-&gt;createData(</span><span class="p">$</span><span class="nv">result</span><span class="x">)-&gt;toArray();</span>
+</pre></div>
+
+
+<p>This result should be used as response data.</p>
 <h2 id="apiindex">Api.Index</h2>
-<p>This will give you a (full) collection of items.</p>
+<p>This Action is used when calling e.g. <code>GET /blogs</code>.</p>
+<p>The following events are triggered during this Action:</p>
+<ul>
+<li><code>Crud.beforePaginate</code></li>
+<li><code>Crud.afterPaginate</code></li>
+<li><code>Crud.beforeRender</code></li>
+</ul>
 <h2 id="apiview">Api.View</h2>
-<p>This will return a single item.</p>
+<p>This Action is used when calling e.g. <code>GET /blogs/1</code>.</p>
+<p>The following events are triggered during this Action:</p>
+<ul>
+<li><code>Crud.beforeRender</code></li>
+</ul>
 <h2 id="apiadd">Api.Add</h2>
-<p>This will add an item.</p>
-<blockquote>
-<p>Not implemented properly yet...</p>
-</blockquote>
+<p>This Action is used when calling e.g. <code>POST /blogs</code>.</p>
+<p>The following events are triggered during this Action:</p>
+<ul>
+<li><code>Crud.beforeSave</code></li>
+</ul>
 <h2 id="apiedit">Api.Edit</h2>
-<p>This will modify/edit an item.</p>
-<blockquote>
-<p>Not implemented properly yet...</p>
-</blockquote>
+<p>This Action is used when calling e.g. <code>POST /blogs/1</code>.</p>
+<p>The following events are triggered during this Action:</p>
+<ul>
+<li><code>Crud.beforeSave</code></li>
+</ul>
 <h2 id="apidelete">Api.Delete</h2>
-<p>This will delete the item.</p>
+<p>This Action is used when calling e.g. <code>DELETE /blogs/1</code>.</p>
 <blockquote>
 <p>Not implemented properly yet...</p>
 </blockquote>
 <h2 id="further-reading">Further Reading</h2>
 <p>Read more about actions <a href="http://crud.readthedocs.io/en/latest/actions.html">here</a></p>
           <aside class="copyright" role="note">
+            
+              Copyright (c) 2016 CakePlugins - Bob Mulder &ndash;
             
             Documentation built with
             <a href="http://www.mkdocs.org" target="_blank">MkDocs</a>
@@ -277,7 +462,7 @@
   <nav class="pagination" aria-label="Footer">
     <div class="previous">
       
-        <a href="../quick-start/" title="Quick Start">
+        <a href="../api-builder/" title="Api Builder">
           <span class="direction">
             Previous
           </span>
@@ -287,7 +472,7 @@
             </div>
             <div class="stretch">
               <div class="title">
-                Quick Start
+                Api Builder
               </div>
             </div>
           </div>
@@ -296,14 +481,14 @@
     </div>
     <div class="next">
       
-        <a href="../events/" title="Events">
+        <a href="../transformers/" title="Transformers">
           <span class="direction">
             Next
           </span>
           <div class="page">
             <div class="stretch">
               <div class="title">
-                Events
+                Transformers
               </div>
             </div>
             <div class="button button-next" role="button" aria-label="Next">
@@ -330,10 +515,42 @@
     </main>
     <script>
       var base_url = '..';
-      var repo_id  = '';
+      var repo_id  = 'cakeplugins/api';
     </script>
     <script src="../assets/javascripts/application-997097ee0c.js"></script>
     
+    
+      <script>
+        (function(i,s,o,g,r,a,m){
+          i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||
+          []).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;
+          m.parentNode.insertBefore(a,m)
+        })(window, document,
+          'script', '//www.google-analytics.com/analytics.js', 'ga');
+        /* General initialization */
+        ga('create', 'UA-60091820-3', 'auto');
+        ga('set', 'anonymizeIp', true);
+        ga('send', 'pageview');
+        /* Track outbound links */
+        var buttons = document.querySelectorAll('a');
+        Array.prototype.map.call(buttons, function(item) {
+          if (item.host != document.location.host) {
+            item.addEventListener('click', function() {
+              var action = item.getAttribute('data-action') || 'follow';
+              ga('send', 'event', 'outbound', action, item.href);
+            });
+          }
+        });
+        /* Register handler to log search on blur */
+        var query = document.querySelector('.query');
+        query.addEventListener('blur', function() {
+          if (this.value) {
+            var path = document.location.pathname;
+            ga('send', 'pageview', path + '?q=' + this.value);
+          }
+        });
+      </script>
     
   </body>
 </html>

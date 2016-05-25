@@ -14,13 +14,17 @@
       
       
       
+        <meta name="author" content="Bob Mulder">
+      
     
     <meta property="og:url" content="None">
     <meta property="og:title" content="CakePHP Api Plugin">
-    <meta property="og:image" content="None/../">
+    <meta property="og:image" content="None/../images/logo.png">
     <meta name="apple-mobile-web-app-title" content="CakePHP Api Plugin">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
+      <link rel="apple-touch-icon" href="../images/logo.png">
     
     
     <link rel="shortcut icon" type="image/x-icon" href="../None">
@@ -66,7 +70,10 @@
   
   
   
-  <body class="palette-primary-light-blue palette-accent-light-blue">
+  <body class="palette-primary-blue-grey palette-accent-grey">
+    
+      
+      
     
     <div class="backdrop">
       <div class="backdrop-paper"></div>
@@ -93,6 +100,16 @@
       </div>
     </div>
     
+      
+      <div class="button button-twitter" role="button" aria-label="Twitter">
+        <a href="https://twitter.com/cakeplugins" title="@cakeplugins on Twitter" target="_blank" class="toggle-button icon icon-twitter"></a>
+      </div>
+    
+    
+      
+      <div class="button button-github" role="button" aria-label="GitHub">
+        <a href="https://github.com/cakeplugins" title="@cakeplugins on GitHub" target="_blank" class="toggle-button icon icon-github"></a>
+      </div>
     
     <div class="button button-search" role="button" aria-label="Search">
       <label class="toggle-button icon icon-search" title="Search" for="toggle-search"></label>
@@ -118,8 +135,12 @@
       <div class="drawer">
         <nav aria-label="Navigation">
   
-  <a href="/" class="project">
+  <a href="https://github.com/cakeplugins/api" class="project">
     <div class="banner">
+      
+        <div class="logo">
+          <img src="../images/logo.png">
+        </div>
       
       <div class="name">
         <strong>
@@ -129,11 +150,30 @@
           </span>
         </strong>
         
+          <br>
+          cakeplugins/api
+        
       </div>
     </div>
   </a>
   <div class="scrollable">
     <div class="wrapper">
+      
+        <ul class="repo">
+          <li class="repo-download">
+            
+            <a href="https://github.com/cakeplugins/api/archive/master.zip" target="_blank" title="Download" data-action="download">
+              <i class="icon icon-download"></i> Download
+            </a>
+          </li>
+          <li class="repo-stars">
+            <a href="https://github.com/cakeplugins/api/stargazers" target="_blank" title="Stargazers" data-action="star">
+              <i class="icon icon-star"></i> Stars
+              <span class="count">&ndash;</span>
+            </a>
+          </li>
+        </ul>
+        <hr>
       
       <div class="toc">
         <ul>
@@ -167,8 +207,44 @@
           
             
   <li>
+    <a class="" title="Api Builder" href="../api-builder/">
+      Api Builder
+    </a>
+    
+  </li>
+
+          
+            
+  <li>
     <a class="" title="Actions" href="../actions/">
       Actions
+    </a>
+    
+  </li>
+
+          
+            
+  <li>
+    <a class="" title="Transformers" href="../transformers/">
+      Transformers
+    </a>
+    
+  </li>
+
+          
+            
+  <li>
+    <a class="" title="Serializers" href="../serializers/">
+      Serializers
+    </a>
+    
+  </li>
+
+          
+            
+  <li>
+    <a class="" title="Parsers" href="../parsers/">
+      Parsers
     </a>
     
   </li>
@@ -190,6 +266,27 @@
           
         </ul>
         
+          <hr>
+          <span class="section">The author</span>
+          <ul>
+            
+              
+              <li>
+                <a href="https://twitter.com/cakeplugins" target="_blank" title="@cakeplugins on Twitter">
+                  @cakeplugins on Twitter
+                </a>
+              </li>
+            
+            
+              
+              <li>
+                <a href="https://github.com/cakeplugins" target="_blank" title="@cakeplugins on GitHub">
+                  @cakeplugins on GitHub
+                </a>
+              </li>
+            
+          </ul>
+        
       </div>
     </div>
   </div>
@@ -201,6 +298,8 @@
           <h1 id="events">Events</h1>
 <p>This documentation will be expanded soon. For now you can take a look at http://crud.readthedocs.io/en/latest/events.html.</p>
           <aside class="copyright" role="note">
+            
+              Copyright (c) 2016 CakePlugins - Bob Mulder &ndash;
             
             Documentation built with
             <a href="http://www.mkdocs.org" target="_blank">MkDocs</a>
@@ -216,7 +315,7 @@
   <nav class="pagination" aria-label="Footer">
     <div class="previous">
       
-        <a href="../actions/" title="Actions">
+        <a href="../parsers/" title="Parsers">
           <span class="direction">
             Previous
           </span>
@@ -226,7 +325,7 @@
             </div>
             <div class="stretch">
               <div class="title">
-                Actions
+                Parsers
               </div>
             </div>
           </div>
@@ -253,10 +352,42 @@
     </main>
     <script>
       var base_url = '..';
-      var repo_id  = '';
+      var repo_id  = 'cakeplugins/api';
     </script>
     <script src="../assets/javascripts/application-997097ee0c.js"></script>
     
+    
+      <script>
+        (function(i,s,o,g,r,a,m){
+          i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||
+          []).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;
+          m.parentNode.insertBefore(a,m)
+        })(window, document,
+          'script', '//www.google-analytics.com/analytics.js', 'ga');
+        /* General initialization */
+        ga('create', 'UA-60091820-3', 'auto');
+        ga('set', 'anonymizeIp', true);
+        ga('send', 'pageview');
+        /* Track outbound links */
+        var buttons = document.querySelectorAll('a');
+        Array.prototype.map.call(buttons, function(item) {
+          if (item.host != document.location.host) {
+            item.addEventListener('click', function() {
+              var action = item.getAttribute('data-action') || 'follow';
+              ga('send', 'event', 'outbound', action, item.href);
+            });
+          }
+        });
+        /* Register handler to log search on blur */
+        var query = document.querySelector('.query');
+        query.addEventListener('blur', function() {
+          if (this.value) {
+            var path = document.location.pathname;
+            ga('send', 'pageview', path + '?q=' + this.value);
+          }
+        });
+      </script>
     
   </body>
 </html>

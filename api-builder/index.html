@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1">
     
       
-        <title>Quick Start - CakePHP Api Plugin</title>
+        <title>Api Builder - CakePHP Api Plugin</title>
       
       
       
@@ -96,7 +96,7 @@
             
           </span>
         
-        Quick Start
+        Api Builder
       </div>
     </div>
     
@@ -198,8 +198,17 @@
           
             
   <li>
-    <a class="current" title="Quick Start" href="./">
+    <a class="" title="Quick Start" href="../quick-start/">
       Quick Start
+    </a>
+    
+  </li>
+
+          
+            
+  <li>
+    <a class="current" title="Api Builder" href="./">
+      Api Builder
     </a>
     
       
@@ -209,46 +218,19 @@
         <ul>
           
             <li class="anchor">
-              <a title="Routing" href="#routing">
-                Routing
+              <a title="Loading the Component" href="#loading-the-component">
+                Loading the Component
               </a>
             </li>
           
             <li class="anchor">
-              <a title="ApiBuilder Component" href="#apibuilder-component">
-                ApiBuilder Component
-              </a>
-            </li>
-          
-            <li class="anchor">
-              <a title="Transformers" href="#transformers">
-                Transformers
-              </a>
-            </li>
-          
-            <li class="anchor">
-              <a title="Serializers" href="#serializers">
-                Serializers
-              </a>
-            </li>
-          
-            <li class="anchor">
-              <a title="Result" href="#result">
-                Result
+              <a title="Configurations" href="#configurations">
+                Configurations
               </a>
             </li>
           
         </ul>
       
-    
-  </li>
-
-          
-            
-  <li>
-    <a class="" title="Api Builder" href="../api-builder/">
-      Api Builder
-    </a>
     
   </li>
 
@@ -329,20 +311,10 @@
       <article class="article">
         <div class="wrapper">
           
-          <h1 id="quick-start">Quick Start</h1>
-<p>In this section we will show a quick example of the use of the plugin.</p>
-<p>After <a href="../installation/">installation</a>, you are ready to create your API endpoints.</p>
-<h2 id="routing">Routing</h2>
-<p>Add the following to your <code>config/routes.php</code> to enable RESTful routing for your API:</p>
-<div class="code"><pre><span></span><span class="x">Router::scope(&#39;/&#39;, function (RouteBuilder </span><span class="p">$</span><span class="nv">routes</span><span class="x">) </span><span class="err">{</span><span class="x"></span>
-<span class="x">    </span><span class="p">$</span><span class="nv">routes</span><span class="x">-&gt;extensions([&#39;json&#39;]);</span>
-<span class="x">    </span><span class="p">$</span><span class="nv">routes</span><span class="x">-&gt;resources(&#39;blogs&#39;);</span>
-<span class="x">});</span>
-</pre></div>
-
-
-<h2 id="apibuilder-component">ApiBuilder Component</h2>
-<p>To get started you need to load the <code>ApiBuilder</code> Component:</p>
+          <h1 id="apibuilder-component">ApiBuilder Component</h1>
+<p>The <code>ApiBuilder</code> Component is the core of the plugin. This is where it all begins...</p>
+<h2 id="loading-the-component">Loading the Component</h2>
+<p>To get started with your API, you need to load the <code>ApiBuilder</code> Component:</p>
 <div class="code"><pre><span></span><span class="nt">class</span> <span class="nt">BlogsController</span> <span class="nt">extends</span> <span class="nt">AppController</span>
 <span class="p">{</span>
     <span class="n">use</span> <span class="n">Api</span><span class="err">\</span><span class="n">Controller</span><span class="err">\</span><span class="n">ApiControllerTrait</span><span class="p">;</span>
@@ -365,150 +337,28 @@
 </pre></div>
 
 
-<blockquote>
-<p>Note: Want to read more about the <code>ApiBuilder</code> Component? <a href="../api-builder/">Check out the possibilities here!</a></p>
-</blockquote>
-<h2 id="transformers">Transformers</h2>
-<p>Transformers are classes, which are responsible for taking one instance of the resource data and converting it to a basic array. Transformers are implemented by <a href="http://fractal.thephpleague.com/transformers/">Fractal</a>.</p>
-<p>If you want a hand-on, we recommend to use this query first to build up your <code>blogs</code> table...:</p>
-<div class="code"><pre><span></span>CREATE TABLE `blogs` (
-    `id` INT(11) NOT NULL AUTO_INCREMENT,
-    `title` VARCHAR(255) NULL DEFAULT NULL,
-    `body` TEXT NULL,
-    `author` VARCHAR(255) NULL DEFAULT NULL,
-    `created` DATETIME NULL DEFAULT NULL,
-    `modified` DATETIME NULL DEFAULT NULL,
-    PRIMARY KEY (`id`)
-);
+<p>Now you are able to call the component in your Controller like:</p>
+<div class="code"><pre><span></span><span class="p">$</span><span class="nv">this</span><span class="x">-&gt;ApiBuilder;</span>
 </pre></div>
 
 
-<p>... And quickely build your model:</p>
-<div class="code"><pre><span></span>$ bin/cake bake model Blogs
+<p>When you're working in an Action, you can access the <code>ApiBuilder</code> like:</p>
+<div class="code"><pre><span></span><span class="p">$</span><span class="nv">this</span><span class="x">-&gt;_api();</span>
 </pre></div>
 
 
-<p>You can easily create your first transformer with <code>cake bake</code>:</p>
-<div class="code"><pre><span></span>$ bin/cake bake transformer Blog
-</pre></div>
-
-
-<p>You can see that the <code>BlogTransformer</code> class has the following method:</p>
-<div class="code"><pre><span></span><span class="x">namespace App\Transformer;</span>
-
-<span class="x">class BlogTransformer extends Transformer</span>
-<span class="err">{</span><span class="x"></span>
-
-<span class="x">    /**</span>
-<span class="x">     * Transformer</span>
-<span class="x">     *</span>
-<span class="x">     * @param Blog </span><span class="p">$</span><span class="nv">entity</span><span class="x"> Item.</span>
-<span class="x">     * @return array</span>
-<span class="x">     */</span>
-<span class="x">    public function transform(Blog </span><span class="p">$</span><span class="nv">entity</span><span class="x">)</span>
-<span class="x">    </span><span class="err">{</span><span class="x"></span>
-<span class="x">        return[</span>
-<span class="x">            &#39;id&#39; =&gt; </span><span class="p">$</span><span class="nv">entity</span><span class="x">-&gt;get(&#39;id&#39;),</span>
-<span class="x">            &#39;name&#39; =&gt; </span><span class="p">$</span><span class="nv">entity</span><span class="x">-&gt;get(&#39;name&#39;),</span>
-<span class="x">            &#39;body&#39; =&gt; </span><span class="p">$</span><span class="nv">entity</span><span class="x">-&gt;get(&#39;body&#39;),</span>
-<span class="x">            &#39;category_id&#39; =&gt; </span><span class="p">$</span><span class="nv">entity</span><span class="x">-&gt;get(&#39;category_id&#39;),</span>
-<span class="x">            &#39;created&#39; =&gt; </span><span class="p">$</span><span class="nv">entity</span><span class="x">-&gt;get(&#39;created&#39;),</span>
-<span class="x">            &#39;modified&#39; =&gt; </span><span class="p">$</span><span class="nv">entity</span><span class="x">-&gt;get(&#39;modified&#39;),</span>
-<span class="x">        ];</span>
-<span class="x">    }</span>
-
-<span class="x">}</span>
-</pre></div>
-
-
-<p>The good thing about Transformers is that they are the “barrier” between source data and output. That means that schema changes do not affect users.
-You are free to choose the structure of the result of your <code>transform</code> method.</p>
-<blockquote>
-<p>Note: Want to read more about Transformers? <a href="http://fractal.thephpleague.com/transformers/">Check out the possibilities here!</a></p>
-</blockquote>
-<h2 id="serializers">Serializers</h2>
-<p>Serializers are another great thing of <a href="http://fractal.thephpleague.com/transformers/">Fractal</a>. They structure your transformed data in certain ways.
-There are 3 serializers available:</p>
+<h2 id="configurations">Configurations</h2>
+<p>The following configurations can be passed through the component:</p>
 <ul>
-<li><code>DataArraySerializer</code> - The default serializer. It adds a <code>data</code> namespace to the output:</li>
+<li><code>actions</code> - Array of actions with its mappings. So when the <code>index</code> action is requested, the <code>IndexAction</code> of the API plugin is used.</li>
+<li><code>serializer</code> - Namespace of the serializer to use. Default <code>League\Fractal\Serializer\DataArraySerializer</code>.</li>
+<li><code>parser</code> - Namespace of the parser to use. Default <code>Api\Parser\DataArrayParser</code>.</li>
+<li><code>paginator</code> - Paginator to use (for Fractal). Default <code>Api\Pagination\CakePaginatorAdapter</code>.</li>
+<li><code>listeners</code> - Array of listeners to implement.</li>
+<li><code>eventPrefix</code> - The prefix of events send by Crud. Default <code>Crud</code>.</li>
+<li><code>recursionLimit</code>- Limit of recursions by Fractal (<code>GET /categories?include=blogs.author</code> has 2 recursions). Default <code>10</code>.</li>
+<li><code>baseUrl</code> - The BaseURL of the API. Default gotten from Cake's <code>Router</code> class.</li>
 </ul>
-<div class="code"><pre><span></span>// Item
-[
-    &#39;data&#39; =&gt; [
-        &#39;foo&#39; =&gt; &#39;bar&#39;
-    ],
-];
-
-// Collection
-[
-    &#39;data&#39; =&gt; [
-        [
-            &#39;foo&#39; =&gt; &#39;bar&#39;
-        ]
-    ],
-];
-</pre></div>
-
-
-<ul>
-<li><code>ArraySerializer</code> - Sometimes people want to remove that 'data' namespace for items, which can be done by this serializer. 
-This is mostly the same, other than that namespace for items. Collections keep the 'data' namespace to avoid confusing JSON when meta data is added.</li>
-</ul>
-<div class="code"><pre><span></span>// Item
-[
-    &#39;foo&#39; =&gt; &#39;bar&#39;
-];
-
-// Collection
-[
-    &#39;data&#39; =&gt; [
-        &#39;foo&#39; =&gt; &#39;bar&#39;
-    ]
-];
-</pre></div>
-
-
-<ul>
-<li><code>JsonApiSerializer</code> - This is a representation of the <a href="http://jsonapi.org/">JSON-API standard (v1.0)</a> which is very great. Output looks like:</li>
-</ul>
-<div class="code"><pre><span></span>// Item
-[
-    &#39;data&#39; =&gt; [
-        &#39;type&#39; =&gt; &#39;books&#39;,
-        &#39;id&#39; =&gt; 1,
-        &#39;attributes&#39; =&gt; [
-            &#39;foo&#39; =&gt; &#39;bar&#39;
-        ],
-    ],
-];
-
-// Collection
-[
-    &#39;data&#39; =&gt; [
-        [
-            &#39;type&#39; =&gt; &#39;books&#39;,
-            &#39;id&#39; =&gt; 1,
-            &#39;attributes&#39; =&gt; [
-                &#39;foo&#39; =&gt; &#39;bar&#39;
-            ],
-        ]
-    ],
-];
-</pre></div>
-
-
-<p>You can set the serializer you want via the <code>ApiBuilder</code>:</p>
-<div class="code"><pre><span></span><span class="p">$</span><span class="nv">this</span><span class="x">-&gt;loadComponent(&#39;Api.ApiBuilder&#39;, [</span>
-<span class="x">    &#39;serializer&#39; =&gt; League\Fractal\Serializer\JsonApiSerializer::class</span>
-<span class="x">]);</span>
-</pre></div>
-
-
-<blockquote>
-<p>Note: Want to read more about Serializers? <a href="http://fractal.thephpleague.com/serializers/">Check out the possibilities here!</a></p>
-</blockquote>
-<h2 id="result">Result</h2>
-<p>You've added the <code>ApiBuilder</code> component to the controller, you've created the transformer, and chose your serializer. You are ready to go!</p>
           <aside class="copyright" role="note">
             
               Copyright (c) 2016 CakePlugins - Bob Mulder &ndash;
@@ -527,7 +377,7 @@ This is mostly the same, other than that namespace for items. Collections keep t
   <nav class="pagination" aria-label="Footer">
     <div class="previous">
       
-        <a href="../installation/" title="Installation">
+        <a href="../quick-start/" title="Quick Start">
           <span class="direction">
             Previous
           </span>
@@ -537,7 +387,7 @@ This is mostly the same, other than that namespace for items. Collections keep t
             </div>
             <div class="stretch">
               <div class="title">
-                Installation
+                Quick Start
               </div>
             </div>
           </div>
@@ -546,14 +396,14 @@ This is mostly the same, other than that namespace for items. Collections keep t
     </div>
     <div class="next">
       
-        <a href="../api-builder/" title="Api Builder">
+        <a href="../actions/" title="Actions">
           <span class="direction">
             Next
           </span>
           <div class="page">
             <div class="stretch">
               <div class="title">
-                Api Builder
+                Actions
               </div>
             </div>
             <div class="button button-next" role="button" aria-label="Next">

@@ -57,7 +57,7 @@
         }, 
         {
             "location": "/quick-start/", 
-            "text": "Quick Start\n\n\nIn this section we will show a quick example of the use of the plugin.\n\n\nAfter \ninstallation\n, you are ready to create your API endpoints.\n\n\nRouting\n\n\nAdd the following to your \nconfig/routes.php\n to enable RESTful routing for your API:\n\n\nRouter::scope(\n/\n, function (RouteBuilder \n$\nroutes\n) \n{\n\n\n    \n$\nroutes\n-\nextensions([\njson\n]);\n\n\n    \n$\nroutes\n-\nresources(\nblogs\n);\n\n\n});\n\n\n\n\n\n\nApiBuilder Component\n\n\nTo get started you need to load the \nApiBuilder\n component:\n\n\nclass\n \nBlogsController\n \nextends\n \nAppController\n\n\n{\n\n    \nuse\n \nApi\n\\\nController\n\\\nApiControllerTrait\n;\n\n\n    \npublic\n \nfunction\n \ninitialize\n()\n\n    \n{\n\n        \nparent\n::\ninitialize\n();\n\n\n        \n$\nthis\n-\nloadComponent\n(\nApi.ApiBuilder\n,\n \n[\n\n            \nactions\n \n=\n \n[\n\n                \nindex\n \n=\n \nApi.Index\n,\n\n                \nview\n \n=\n \nApi.View\n,\n\n                \nadd\n \n=\n \nApi.Add\n\n                \nedit\n \n=\n \nApi.Edit\n,\n\n                \ndelete\n \n=\n \nApi.Delete\n,\n\n            \n]\n\n        \n]);\n\n    \n}\n\n\n}\n\n\n\n\n\n\nThe following settings can be passed through the component:\n\n\n\n\nactions\n - Array of actions with its mappings. So when the \nindex\n action is requested, the \nIndexAction\n of the API plugin is used.\n\n\nserializer\n - Namespace of the serializer to use. Default \nLeague\\Fractal\\Serializer\\DataArraySerializer\n.\n\n\npaginator\n - Paginator to use (for Fractal). Default \nApi\\Pagination\\CakePaginatorAdapter\n.\n\n\nlisteners\n - Array of listeners to implement.\n\n\n\n\nTransformers\n\n\nTransformers are classes, which are responsible for taking one instance of the resource data and converting it to a basic array. Transformers are implemented by \nFractal\n.\n\n\nIf you want a hand-on, we recommend to use this query first to build up your \nblogs\n table...:\n\n\nCREATE TABLE `blogs` (\n    `id` INT(11) NOT NULL AUTO_INCREMENT,\n    `title` VARCHAR(255) NULL DEFAULT NULL,\n    `body` TEXT NULL,\n    `author` VARCHAR(255) NULL DEFAULT NULL,\n    `created` DATETIME NULL DEFAULT NULL,\n    `modified` DATETIME NULL DEFAULT NULL,\n    PRIMARY KEY (`id`)\n);\n\n\n\n\n\n... And quickely build your model:\n\n\n$ bin/cake bake model Blogs\n\n\n\n\n\nYou can easily create your first transformer with \ncake bake\n:\n\n\n$ bin/cake bake transformer Blog\n\n\n\n\n\nYou can see that the \nBlogTransformer\n class has the following method:\n\n\nnamespace App\\Transformer;\n\n\n\nclass BlogTransformer extends Transformer\n\n\n{\n\n\n\n    /**\n\n\n     * Transformer\n\n\n     *\n\n\n     * @param Blog \n$\nentity\n Item.\n\n\n     * @return array\n\n\n     */\n\n\n    public function transform(Blog \n$\nentity\n)\n\n\n    \n{\n\n\n        return[\n\n\n            \nid\n =\n \n$\nentity\n-\nget(\nid\n),\n\n\n            \nname\n =\n \n$\nentity\n-\nget(\nname\n),\n\n\n            \nbody\n =\n \n$\nentity\n-\nget(\nbody\n),\n\n\n            \ncategory_id\n =\n \n$\nentity\n-\nget(\ncategory_id\n),\n\n\n            \ncreated\n =\n \n$\nentity\n-\nget(\ncreated\n),\n\n\n            \nmodified\n =\n \n$\nentity\n-\nget(\nmodified\n),\n\n\n        ];\n\n\n    }\n\n\n\n}\n\n\n\n\n\n\nThe good thing about Transformers is that they are the \u201cbarrier\u201d between source data and output. That means that schema changes do not affect users.\nYou are free to choose the structure of the result of your \ntransform\n method.\n\n\n\n\nNote: Want to read more about Transformers? \nCheck out the possibilities here!\n\n\n\n\nSerializers\n\n\nSerializers are another great thing of \nFractal\n. They structure your transformed data in certain ways.\nThere are 3 serializers available:\n\n\n\n\nDataArraySerializer\n - The default serializer. It adds a \ndata\n namespace to the output:\n\n\n\n\n// Item\n[\n    \ndata\n =\n [\n        \nfoo\n =\n \nbar\n\n    ],\n];\n\n// Collection\n[\n    \ndata\n =\n [\n        [\n            \nfoo\n =\n \nbar\n\n        ]\n    ],\n];\n\n\n\n\n\n\n\nArraySerializer\n - Sometimes people want to remove that 'data' namespace for items, which can be done by this serializer. \nThis is mostly the same, other than that namespace for items. Collections keep the 'data' namespace to avoid confusing JSON when meta data is added.\n\n\n\n\n// Item\n[\n    \nfoo\n =\n \nbar\n\n];\n\n// Collection\n[\n    \ndata\n =\n [\n        \nfoo\n =\n \nbar\n\n    ]\n];\n\n\n\n\n\n\n\nJsonApiSerializer\n - This is a representation of the \nJSON-API standard (v1.0)\n which is very great. Output looks like:\n\n\n\n\n// Item\n[\n    \ndata\n =\n [\n        \ntype\n =\n \nbooks\n,\n        \nid\n =\n 1,\n        \nattributes\n =\n [\n            \nfoo\n =\n \nbar\n\n        ],\n    ],\n];\n\n// Collection\n[\n    \ndata\n =\n [\n        [\n            \ntype\n =\n \nbooks\n,\n            \nid\n =\n 1,\n            \nattributes\n =\n [\n                \nfoo\n =\n \nbar\n\n            ],\n        ]\n    ],\n];\n\n\n\n\n\nYou can set the serializer you want via the \nApiBuilder\n:\n\n\n$\nthis\n-\nloadComponent(\nApi.ApiBuilder\n, [\n\n\n    \nserializer\n =\n League\\Fractal\\Serializer\\JsonApiSerializer::class\n\n\n]);\n\n\n\n\n\n\n\n\nNote: Want to read more about Serializers? \nCheck out the possibilities here!\n\n\n\n\nResult\n\n\nYou've added the \nApiBuilder\n component to the controller, you've created the transformer, and chose your serializer. You are ready to go!", 
+            "text": "Quick Start\n\n\nIn this section we will show a quick example of the use of the plugin.\n\n\nAfter \ninstallation\n, you are ready to create your API endpoints.\n\n\nRouting\n\n\nAdd the following to your \nconfig/routes.php\n to enable RESTful routing for your API:\n\n\nRouter::scope(\n/\n, function (RouteBuilder \n$\nroutes\n) \n{\n\n\n    \n$\nroutes\n-\nextensions([\njson\n]);\n\n\n    \n$\nroutes\n-\nresources(\nblogs\n);\n\n\n});\n\n\n\n\n\n\nApiBuilder Component\n\n\nTo get started you need to load the \nApiBuilder\n Component:\n\n\nclass\n \nBlogsController\n \nextends\n \nAppController\n\n\n{\n\n    \nuse\n \nApi\n\\\nController\n\\\nApiControllerTrait\n;\n\n\n    \npublic\n \nfunction\n \ninitialize\n()\n\n    \n{\n\n        \nparent\n::\ninitialize\n();\n\n\n        \n$\nthis\n-\nloadComponent\n(\nApi.ApiBuilder\n,\n \n[\n\n            \nactions\n \n=\n \n[\n\n                \nindex\n \n=\n \nApi.Index\n,\n\n                \nview\n \n=\n \nApi.View\n,\n\n                \nadd\n \n=\n \nApi.Add\n\n                \nedit\n \n=\n \nApi.Edit\n,\n\n                \ndelete\n \n=\n \nApi.Delete\n,\n\n            \n]\n\n        \n]);\n\n    \n}\n\n\n}\n\n\n\n\n\n\n\n\nNote: Want to read more about the \nApiBuilder\n Component? \nCheck out the possibilities here!\n\n\n\n\nTransformers\n\n\nTransformers are classes, which are responsible for taking one instance of the resource data and converting it to a basic array. Transformers are implemented by \nFractal\n.\n\n\nIf you want a hand-on, we recommend to use this query first to build up your \nblogs\n table...:\n\n\nCREATE TABLE `blogs` (\n    `id` INT(11) NOT NULL AUTO_INCREMENT,\n    `title` VARCHAR(255) NULL DEFAULT NULL,\n    `body` TEXT NULL,\n    `author` VARCHAR(255) NULL DEFAULT NULL,\n    `created` DATETIME NULL DEFAULT NULL,\n    `modified` DATETIME NULL DEFAULT NULL,\n    PRIMARY KEY (`id`)\n);\n\n\n\n\n\n... And quickely build your model:\n\n\n$ bin/cake bake model Blogs\n\n\n\n\n\nYou can easily create your first transformer with \ncake bake\n:\n\n\n$ bin/cake bake transformer Blog\n\n\n\n\n\nYou can see that the \nBlogTransformer\n class has the following method:\n\n\nnamespace App\\Transformer;\n\n\n\nclass BlogTransformer extends Transformer\n\n\n{\n\n\n\n    /**\n\n\n     * Transformer\n\n\n     *\n\n\n     * @param Blog \n$\nentity\n Item.\n\n\n     * @return array\n\n\n     */\n\n\n    public function transform(Blog \n$\nentity\n)\n\n\n    \n{\n\n\n        return[\n\n\n            \nid\n =\n \n$\nentity\n-\nget(\nid\n),\n\n\n            \nname\n =\n \n$\nentity\n-\nget(\nname\n),\n\n\n            \nbody\n =\n \n$\nentity\n-\nget(\nbody\n),\n\n\n            \ncategory_id\n =\n \n$\nentity\n-\nget(\ncategory_id\n),\n\n\n            \ncreated\n =\n \n$\nentity\n-\nget(\ncreated\n),\n\n\n            \nmodified\n =\n \n$\nentity\n-\nget(\nmodified\n),\n\n\n        ];\n\n\n    }\n\n\n\n}\n\n\n\n\n\n\nThe good thing about Transformers is that they are the \u201cbarrier\u201d between source data and output. That means that schema changes do not affect users.\nYou are free to choose the structure of the result of your \ntransform\n method.\n\n\n\n\nNote: Want to read more about Transformers? \nCheck out the possibilities here!\n\n\n\n\nSerializers\n\n\nSerializers are another great thing of \nFractal\n. They structure your transformed data in certain ways.\nThere are 3 serializers available:\n\n\n\n\nDataArraySerializer\n - The default serializer. It adds a \ndata\n namespace to the output:\n\n\n\n\n// Item\n[\n    \ndata\n =\n [\n        \nfoo\n =\n \nbar\n\n    ],\n];\n\n// Collection\n[\n    \ndata\n =\n [\n        [\n            \nfoo\n =\n \nbar\n\n        ]\n    ],\n];\n\n\n\n\n\n\n\nArraySerializer\n - Sometimes people want to remove that 'data' namespace for items, which can be done by this serializer. \nThis is mostly the same, other than that namespace for items. Collections keep the 'data' namespace to avoid confusing JSON when meta data is added.\n\n\n\n\n// Item\n[\n    \nfoo\n =\n \nbar\n\n];\n\n// Collection\n[\n    \ndata\n =\n [\n        \nfoo\n =\n \nbar\n\n    ]\n];\n\n\n\n\n\n\n\nJsonApiSerializer\n - This is a representation of the \nJSON-API standard (v1.0)\n which is very great. Output looks like:\n\n\n\n\n// Item\n[\n    \ndata\n =\n [\n        \ntype\n =\n \nbooks\n,\n        \nid\n =\n 1,\n        \nattributes\n =\n [\n            \nfoo\n =\n \nbar\n\n        ],\n    ],\n];\n\n// Collection\n[\n    \ndata\n =\n [\n        [\n            \ntype\n =\n \nbooks\n,\n            \nid\n =\n 1,\n            \nattributes\n =\n [\n                \nfoo\n =\n \nbar\n\n            ],\n        ]\n    ],\n];\n\n\n\n\n\nYou can set the serializer you want via the \nApiBuilder\n:\n\n\n$\nthis\n-\nloadComponent(\nApi.ApiBuilder\n, [\n\n\n    \nserializer\n =\n League\\Fractal\\Serializer\\JsonApiSerializer::class\n\n\n]);\n\n\n\n\n\n\n\n\nNote: Want to read more about Serializers? \nCheck out the possibilities here!\n\n\n\n\nResult\n\n\nYou've added the \nApiBuilder\n component to the controller, you've created the transformer, and chose your serializer. You are ready to go!", 
             "title": "Quick Start"
         }, 
         {
@@ -72,7 +72,7 @@
         }, 
         {
             "location": "/quick-start/#apibuilder-component", 
-            "text": "To get started you need to load the  ApiBuilder  component:  class   BlogsController   extends   AppController  { \n     use   Api \\ Controller \\ ApiControllerTrait ; \n\n     public   function   initialize () \n     { \n         parent :: initialize (); \n\n         $ this - loadComponent ( Api.ApiBuilder ,   [ \n             actions   =   [ \n                 index   =   Api.Index , \n                 view   =   Api.View , \n                 add   =   Api.Add \n                 edit   =   Api.Edit , \n                 delete   =   Api.Delete , \n             ] \n         ]); \n     }  }   The following settings can be passed through the component:   actions  - Array of actions with its mappings. So when the  index  action is requested, the  IndexAction  of the API plugin is used.  serializer  - Namespace of the serializer to use. Default  League\\Fractal\\Serializer\\DataArraySerializer .  paginator  - Paginator to use (for Fractal). Default  Api\\Pagination\\CakePaginatorAdapter .  listeners  - Array of listeners to implement.", 
+            "text": "To get started you need to load the  ApiBuilder  Component:  class   BlogsController   extends   AppController  { \n     use   Api \\ Controller \\ ApiControllerTrait ; \n\n     public   function   initialize () \n     { \n         parent :: initialize (); \n\n         $ this - loadComponent ( Api.ApiBuilder ,   [ \n             actions   =   [ \n                 index   =   Api.Index , \n                 view   =   Api.View , \n                 add   =   Api.Add \n                 edit   =   Api.Edit , \n                 delete   =   Api.Delete , \n             ] \n         ]); \n     }  }    Note: Want to read more about the  ApiBuilder  Component?  Check out the possibilities here!", 
             "title": "ApiBuilder Component"
         }, 
         {
@@ -91,44 +91,159 @@
             "title": "Result"
         }, 
         {
+            "location": "/api-builder/", 
+            "text": "ApiBuilder Component\n\n\nThe \nApiBuilder\n Component is the core of the plugin. This is where it all begins...\n\n\nLoading the Component\n\n\nTo get started with your API, you need to load the \nApiBuilder\n Component:\n\n\nclass\n \nBlogsController\n \nextends\n \nAppController\n\n\n{\n\n    \nuse\n \nApi\n\\\nController\n\\\nApiControllerTrait\n;\n\n\n    \npublic\n \nfunction\n \ninitialize\n()\n\n    \n{\n\n        \nparent\n::\ninitialize\n();\n\n\n        \n$\nthis\n-\nloadComponent\n(\nApi.ApiBuilder\n,\n \n[\n\n            \nactions\n \n=\n \n[\n\n                \nindex\n \n=\n \nApi.Index\n,\n\n                \nview\n \n=\n \nApi.View\n,\n\n                \nadd\n \n=\n \nApi.Add\n\n                \nedit\n \n=\n \nApi.Edit\n,\n\n                \ndelete\n \n=\n \nApi.Delete\n,\n\n            \n]\n\n        \n]);\n\n    \n}\n\n\n}\n\n\n\n\n\n\nNow you are able to call the component in your Controller like:\n\n\n$\nthis\n-\nApiBuilder;\n\n\n\n\n\n\nWhen you're working in an Action, you can access the \nApiBuilder\n like:\n\n\n$\nthis\n-\n_api();\n\n\n\n\n\n\nConfigurations\n\n\nThe following configurations can be passed through the component:\n\n\n\n\nactions\n - Array of actions with its mappings. So when the \nindex\n action is requested, the \nIndexAction\n of the API plugin is used.\n\n\nserializer\n - Namespace of the serializer to use. Default \nLeague\\Fractal\\Serializer\\DataArraySerializer\n.\n\n\nparser\n - Namespace of the parser to use. Default \nApi\\Parser\\DataArrayParser\n.\n\n\npaginator\n - Paginator to use (for Fractal). Default \nApi\\Pagination\\CakePaginatorAdapter\n.\n\n\nlisteners\n - Array of listeners to implement.\n\n\neventPrefix\n - The prefix of events send by Crud. Default \nCrud\n.\n\n\nrecursionLimit\n- Limit of recursions by Fractal (\nGET /categories?include=blogs.author\n has 2 recursions). Default \n10\n.\n\n\nbaseUrl\n - The BaseURL of the API. Default gotten from Cake's \nRouter\n class.", 
+            "title": "Api Builder"
+        }, 
+        {
+            "location": "/api-builder/#apibuilder-component", 
+            "text": "The  ApiBuilder  Component is the core of the plugin. This is where it all begins...", 
+            "title": "ApiBuilder Component"
+        }, 
+        {
+            "location": "/api-builder/#loading-the-component", 
+            "text": "To get started with your API, you need to load the  ApiBuilder  Component:  class   BlogsController   extends   AppController  { \n     use   Api \\ Controller \\ ApiControllerTrait ; \n\n     public   function   initialize () \n     { \n         parent :: initialize (); \n\n         $ this - loadComponent ( Api.ApiBuilder ,   [ \n             actions   =   [ \n                 index   =   Api.Index , \n                 view   =   Api.View , \n                 add   =   Api.Add \n                 edit   =   Api.Edit , \n                 delete   =   Api.Delete , \n             ] \n         ]); \n     }  }   Now you are able to call the component in your Controller like:  $ this - ApiBuilder;   When you're working in an Action, you can access the  ApiBuilder  like:  $ this - _api();", 
+            "title": "Loading the Component"
+        }, 
+        {
+            "location": "/api-builder/#configurations", 
+            "text": "The following configurations can be passed through the component:   actions  - Array of actions with its mappings. So when the  index  action is requested, the  IndexAction  of the API plugin is used.  serializer  - Namespace of the serializer to use. Default  League\\Fractal\\Serializer\\DataArraySerializer .  parser  - Namespace of the parser to use. Default  Api\\Parser\\DataArrayParser .  paginator  - Paginator to use (for Fractal). Default  Api\\Pagination\\CakePaginatorAdapter .  listeners  - Array of listeners to implement.  eventPrefix  - The prefix of events send by Crud. Default  Crud .  recursionLimit - Limit of recursions by Fractal ( GET /categories?include=blogs.author  has 2 recursions). Default  10 .  baseUrl  - The BaseURL of the API. Default gotten from Cake's  Router  class.", 
+            "title": "Configurations"
+        }, 
+        {
             "location": "/actions/", 
-            "text": "Actions\n\n\nThe following actions are provided by the Api Plugin:\n\n\nApi.Index\n\n\nThis will give you a (full) collection of items.\n\n\nApi.View\n\n\nThis will return a single item.\n\n\nApi.Add\n\n\nThis will add an item.\n\n\n\n\nNot implemented properly yet...\n\n\n\n\nApi.Edit\n\n\nThis will modify/edit an item.\n\n\n\n\nNot implemented properly yet...\n\n\n\n\nApi.Delete\n\n\nThis will delete the item.\n\n\n\n\nNot implemented properly yet...\n\n\n\n\nFurther Reading\n\n\nRead more about actions \nhere", 
+            "text": "Actions\n\n\nThe following actions are provided by the Api Plugin:\n\n\n\n\nApi.Index\n\n\nApi.View\n\n\nApi.Add\n\n\nApi.Edit\n\n\nApi.Delete\n\n\n\n\nYou can load those actions when loading the \nApiBuilder\n Component:\n\n\n    \n$\nthis\n-\nloadComponent(\nApi.ApiBuilder\n, [\n\n\n        \nactions\n =\n [\n\n\n            \nindex\n =\n \nApi.Index\n,\n\n\n            \nview\n =\n \nApi.View\n,\n\n\n            \nadd\n =\n \nApi.Add\n\n\n            \nedit\n =\n \nApi.Edit\n,\n\n\n            \ndelete\n =\n \nApi.Delete\n,\n\n\n        ]\n\n\n    ]);\n\n\n\n\n\n\nAll Action classes extend on the \nApi\\Action\\ApiAction\n class.\n\n\nGeneral methods\n\n\nThe \nAction\n classes heve some usefull methods.\n\n\nTo set a status code you can use the following example:\n\n\n$\nthis\n-\nstatusCode(201);\n\n\n\n\n\n\n\n\nNote that all other methods like \n_table()\n, \n_controller()\n, \n_request()\n, and more are all available thanks to the Crud plugin.\n\n\n\n\nFractal related methods\n\n\nThe \nManager\n class of Fractal is accessible with the method:\n\n\n$\nmanager\n = \n$\nthis\n-\n_fractal();\n\n\n\n\n\n\nYou can easily get the related Transformer instance like:\n\n\n$\ntransformer\n = \n$\nthis\n-\n_transformer();\n\n\n\n\n\n\nThis can be helpful when you want to transform an Item or a Collection:\n\n\n$\nresult\n = \n$\nthis\n-\ncollection(\n$\ndata\n, \n$\nthis\n-\n_transformer());\n\n\n\n\n\n\nAs you see collections and items can be build with the following methods:\n\n\n// Return a collection\n\n\n$\nresult\n = \n$\nthis\n-\ncollection(\n$\ndata\n, \nBlog\n);\n\n\n\n// Return an item\n\n\n$\nresult\n = \n$\nthis\n-\nitem(\n$\ndata\n, \nBlog\n);\n\n\n\n\n\n\nTo 'create' the data to a returnable format you can use the \ncreateData\n method like:\n\n\n$\ndata\n = \n$\nthis\n-\ncreateData(\n$\nresult\n)-\ntoArray();\n\n\n\n\n\n\nThis result should be used as response data.\n\n\nApi.Index\n\n\nThis Action is used when calling e.g. \nGET /blogs\n.\n\n\nThe following events are triggered during this Action:\n\n\n\n\nCrud.beforePaginate\n\n\nCrud.afterPaginate\n\n\nCrud.beforeRender\n\n\n\n\nApi.View\n\n\nThis Action is used when calling e.g. \nGET /blogs/1\n.\n\n\nThe following events are triggered during this Action:\n\n\n\n\nCrud.beforeRender\n\n\n\n\nApi.Add\n\n\nThis Action is used when calling e.g. \nPOST /blogs\n.\n\n\nThe following events are triggered during this Action:\n\n\n\n\nCrud.beforeSave\n\n\n\n\nApi.Edit\n\n\nThis Action is used when calling e.g. \nPOST /blogs/1\n.\n\n\nThe following events are triggered during this Action:\n\n\n\n\nCrud.beforeSave\n\n\n\n\nApi.Delete\n\n\nThis Action is used when calling e.g. \nDELETE /blogs/1\n.\n\n\n\n\nNot implemented properly yet...\n\n\n\n\nFurther Reading\n\n\nRead more about actions \nhere", 
             "title": "Actions"
         }, 
         {
             "location": "/actions/#actions", 
-            "text": "The following actions are provided by the Api Plugin:", 
+            "text": "The following actions are provided by the Api Plugin:   Api.Index  Api.View  Api.Add  Api.Edit  Api.Delete   You can load those actions when loading the  ApiBuilder  Component:       $ this - loadComponent( Api.ApiBuilder , [           actions  =  [               index  =   Api.Index ,               view  =   Api.View ,               add  =   Api.Add               edit  =   Api.Edit ,               delete  =   Api.Delete ,          ]      ]);   All Action classes extend on the  Api\\Action\\ApiAction  class.", 
             "title": "Actions"
         }, 
         {
+            "location": "/actions/#general-methods", 
+            "text": "The  Action  classes heve some usefull methods.  To set a status code you can use the following example:  $ this - statusCode(201);    Note that all other methods like  _table() ,  _controller() ,  _request() , and more are all available thanks to the Crud plugin.", 
+            "title": "General methods"
+        }, 
+        {
+            "location": "/actions/#fractal-related-methods", 
+            "text": "The  Manager  class of Fractal is accessible with the method:  $ manager  =  $ this - _fractal();   You can easily get the related Transformer instance like:  $ transformer  =  $ this - _transformer();   This can be helpful when you want to transform an Item or a Collection:  $ result  =  $ this - collection( $ data ,  $ this - _transformer());   As you see collections and items can be build with the following methods:  // Return a collection  $ result  =  $ this - collection( $ data ,  Blog );  // Return an item  $ result  =  $ this - item( $ data ,  Blog );   To 'create' the data to a returnable format you can use the  createData  method like:  $ data  =  $ this - createData( $ result )- toArray();   This result should be used as response data.", 
+            "title": "Fractal related methods"
+        }, 
+        {
             "location": "/actions/#apiindex", 
-            "text": "This will give you a (full) collection of items.", 
+            "text": "This Action is used when calling e.g.  GET /blogs .  The following events are triggered during this Action:   Crud.beforePaginate  Crud.afterPaginate  Crud.beforeRender", 
             "title": "Api.Index"
         }, 
         {
             "location": "/actions/#apiview", 
-            "text": "This will return a single item.", 
+            "text": "This Action is used when calling e.g.  GET /blogs/1 .  The following events are triggered during this Action:   Crud.beforeRender", 
             "title": "Api.View"
         }, 
         {
             "location": "/actions/#apiadd", 
-            "text": "This will add an item.   Not implemented properly yet...", 
+            "text": "This Action is used when calling e.g.  POST /blogs .  The following events are triggered during this Action:   Crud.beforeSave", 
             "title": "Api.Add"
         }, 
         {
             "location": "/actions/#apiedit", 
-            "text": "This will modify/edit an item.   Not implemented properly yet...", 
+            "text": "This Action is used when calling e.g.  POST /blogs/1 .  The following events are triggered during this Action:   Crud.beforeSave", 
             "title": "Api.Edit"
         }, 
         {
             "location": "/actions/#apidelete", 
-            "text": "This will delete the item.   Not implemented properly yet...", 
+            "text": "This Action is used when calling e.g.  DELETE /blogs/1 .   Not implemented properly yet...", 
             "title": "Api.Delete"
         }, 
         {
             "location": "/actions/#further-reading", 
             "text": "Read more about actions  here", 
             "title": "Further Reading"
+        }, 
+        {
+            "location": "/transformers/", 
+            "text": "Transformers\n\n\nTransformers are classes, which are responsible for taking one instance of the resource data and converting it to a basic array. Transformers are implemented by \nFractal\n.\n\n\nTransformer Class\n\n\nA Transformer class should be placed under de namespace \nApp\\Transformer\n. They \n\n\nGetting Transformers\n\n\nBake\n\n\nYou can easily bake Transformers with the command:\n\n\n$ bin/cake bake transformer Blog\n\n\n\n\n\nNote that you should add Transformers in singular form.\n\n\nOptions\n\n\nThe following options are available:\n\n\n\n\n--no-includes\n - By default the bake method will add include methods for every relationship. If you don't want this, add this flag.\n\n\n\n\nResult\n\n\nThe result will look like:\n\n\nnamespace App\\Transformer;\n\n\n\nuse Api\\Transformer\\TransformerAbstract;\n\n\nuse App\\Model\\Entity\\Blog;\n\n\n\n/**\n\n\n * Blog transformer.\n\n\n */\n\n\nclass BlogTransformer extends TransformerAbstract\n\n\n{\n\n\n\n    /**\n\n\n     * Getter for the resourceKey.\n\n\n     *\n\n\n     * @return string\n\n\n     */\n\n\n    public function resourceKey()\n\n\n    \n{\n\n\n        return \nblogs\n;\n\n\n    }\n\n\n\n    /**\n\n\n     * List of resources possible to include\n\n\n     *\n\n\n     * @var array\n\n\n     */\n\n\n    protected \n$\navailableIncludes\n = [\n\n\n        \ncategories\n\n\n    ];\n\n\n\n    /**\n\n\n     * Transformer\n\n\n     *\n\n\n     * @param Blog \n$\nentity\n Item.\n\n\n     * @return array\n\n\n     */\n\n\n    public function transform(Blog \n$\nentity\n)\n\n\n    \n{\n\n\n        return [\n\n\n            \nid\n =\n \n$\nentity\n-\nget(\nid\n),\n\n\n            \nname\n =\n \n$\nentity\n-\nget(\nname\n),\n\n\n            \nbody\n =\n \n$\nentity\n-\nget(\nbody\n),\n\n\n            \ncategory_id\n =\n \n$\nentity\n-\nget(\ncategory_id\n),\n\n\n            \ncreated\n =\n \n$\nentity\n-\nget(\ncreated\n),\n\n\n            \nmodified\n =\n \n$\nentity\n-\nget(\nmodified\n),\n\n\n        ];\n\n\n    }\n\n\n\n    /**\n\n\n     * Include Category\n\n\n     *\n\n\n     * @param Blog \n$\nentity\n\n\n     * @return \\League\\Fractal\\Resource\\Item\n\n\n     */\n\n\n    public function includeCategory(\n$\nentity\n)\n\n\n    \n{\n\n\n        \n$\ntable\n = \n$\nthis\n-\n_repository(\n$\nentity\n);\n\n\n        \n$\nassociation\n = \n$\ntable\n-\nassociations()-\ngetByProperty(\ncategory\n);\n\n\n\n        \n$\ntable\n-\nloadInto(\n$\nentity\n, [\n$\nassociation\n-\nname()]);\n\n\n\n        return \n$\nthis\n-\nitem(\n$\nentity\n-\nget(\ncategory\n), \nCategory\n);\n\n\n    }\n\n\n\n}\n\n\n\n\n\n\nRead more\n\n\nYou can read more about Transformers at \nthe docs of Fractal\n.", 
+            "title": "Transformers"
+        }, 
+        {
+            "location": "/transformers/#transformers", 
+            "text": "Transformers are classes, which are responsible for taking one instance of the resource data and converting it to a basic array. Transformers are implemented by  Fractal .", 
+            "title": "Transformers"
+        }, 
+        {
+            "location": "/transformers/#transformer-class", 
+            "text": "A Transformer class should be placed under de namespace  App\\Transformer . They", 
+            "title": "Transformer Class"
+        }, 
+        {
+            "location": "/transformers/#getting-transformers", 
+            "text": "", 
+            "title": "Getting Transformers"
+        }, 
+        {
+            "location": "/transformers/#bake", 
+            "text": "You can easily bake Transformers with the command:  $ bin/cake bake transformer Blog  Note that you should add Transformers in singular form.", 
+            "title": "Bake"
+        }, 
+        {
+            "location": "/transformers/#options", 
+            "text": "The following options are available:   --no-includes  - By default the bake method will add include methods for every relationship. If you don't want this, add this flag.", 
+            "title": "Options"
+        }, 
+        {
+            "location": "/transformers/#result", 
+            "text": "The result will look like:  namespace App\\Transformer;  use Api\\Transformer\\TransformerAbstract;  use App\\Model\\Entity\\Blog;  /**   * Blog transformer.   */  class BlogTransformer extends TransformerAbstract  {      /**       * Getter for the resourceKey.       *       * @return string       */      public function resourceKey()       {          return  blogs ;      }      /**       * List of resources possible to include       *       * @var array       */      protected  $ availableIncludes  = [           categories      ];      /**       * Transformer       *       * @param Blog  $ entity  Item.       * @return array       */      public function transform(Blog  $ entity )       {          return [               id  =   $ entity - get( id ),               name  =   $ entity - get( name ),               body  =   $ entity - get( body ),               category_id  =   $ entity - get( category_id ),               created  =   $ entity - get( created ),               modified  =   $ entity - get( modified ),          ];      }      /**       * Include Category       *       * @param Blog  $ entity       * @return \\League\\Fractal\\Resource\\Item       */      public function includeCategory( $ entity )       {           $ table  =  $ this - _repository( $ entity );           $ association  =  $ table - associations()- getByProperty( category );           $ table - loadInto( $ entity , [ $ association - name()]);          return  $ this - item( $ entity - get( category ),  Category );      }  }", 
+            "title": "Result"
+        }, 
+        {
+            "location": "/transformers/#read-more", 
+            "text": "You can read more about Transformers at  the docs of Fractal .", 
+            "title": "Read more"
+        }, 
+        {
+            "location": "/serializers/", 
+            "text": "Serializers\n\n\nSerializers are another great thing of \nFractal\n. They structure your transformed data in certain ways. There are 3 serializers available:\n\n\n\n\nDataArraySerializer\n\n\nArraySerializer\n\n\nJsonApiSerializer\n\n\n\n\nYou can set your favorite Serializer when loading the \nApiBuilder\n Component:\n\n\n    \n$\nthis\n-\nloadComponent(\nApi.ApiBuilder\n, [\n\n\n        \nserializer` =\n League\\Fractal\\Serializer\\JsonApiSerializer::class\n\n\n    ]);\n\n\n\n\n\n\nDataArraySerializer\n\n\n\n\nFor now; read \nhttp://fractal.thephpleague.com/serializers/\n\n\n\n\nArraySerializer\n\n\n\n\nFor now; read \nhttp://fractal.thephpleague.com/serializers/\n\n\n\n\nJsonApiSerializer\n\n\n\n\nFor now; read \nhttp://fractal.thephpleague.com/serializers/\n\n\n\n\nCreating a custom Serializer\n\n\n\n\nFor now; read \nhttp://fractal.thephpleague.com/serializers/\n\n\n\n\nRead more\n\n\nYou can read more about Serializers at \nthe docs of Fractal\n.", 
+            "title": "Serializers"
+        }, 
+        {
+            "location": "/serializers/#serializers", 
+            "text": "Serializers are another great thing of  Fractal . They structure your transformed data in certain ways. There are 3 serializers available:   DataArraySerializer  ArraySerializer  JsonApiSerializer   You can set your favorite Serializer when loading the  ApiBuilder  Component:       $ this - loadComponent( Api.ApiBuilder , [           serializer` =  League\\Fractal\\Serializer\\JsonApiSerializer::class      ]);", 
+            "title": "Serializers"
+        }, 
+        {
+            "location": "/serializers/#dataarrayserializer", 
+            "text": "For now; read  http://fractal.thephpleague.com/serializers/", 
+            "title": "DataArraySerializer"
+        }, 
+        {
+            "location": "/serializers/#arrayserializer", 
+            "text": "For now; read  http://fractal.thephpleague.com/serializers/", 
+            "title": "ArraySerializer"
+        }, 
+        {
+            "location": "/serializers/#jsonapiserializer", 
+            "text": "For now; read  http://fractal.thephpleague.com/serializers/", 
+            "title": "JsonApiSerializer"
+        }, 
+        {
+            "location": "/serializers/#creating-a-custom-serializer", 
+            "text": "For now; read  http://fractal.thephpleague.com/serializers/", 
+            "title": "Creating a custom Serializer"
+        }, 
+        {
+            "location": "/serializers/#read-more", 
+            "text": "You can read more about Serializers at  the docs of Fractal .", 
+            "title": "Read more"
+        }, 
+        {
+            "location": "/parsers/", 
+            "text": "Parsers\n\n\nBecause Fractal is only for \noutput\n data, this plugin introduces Parsers to parse incoming request data into entities. There are 3 Parsers available:\n\n\n\n\nDataArrayParser\n\n\nArrayParser\n\n\nJsonApiParser\n\n\n\n\nYou can set your favorite Parser when loading the \nApiBuilder\n Component:\n\n\n    \n$\nthis\n-\nloadComponent(\nApi.ApiBuilder\n, [\n\n\n        \nparser` =\n Api\\Parser\\JsonApiParser::class\n\n\n    ]);\n\n\n\n\n\n\n\n\nNote: When you choose a specific Serializer, it is adviced to use the same named Parser. This way the output structure strokes with the input structure.", 
+            "title": "Parsers"
+        }, 
+        {
+            "location": "/parsers/#parsers", 
+            "text": "Because Fractal is only for  output  data, this plugin introduces Parsers to parse incoming request data into entities. There are 3 Parsers available:   DataArrayParser  ArrayParser  JsonApiParser   You can set your favorite Parser when loading the  ApiBuilder  Component:       $ this - loadComponent( Api.ApiBuilder , [           parser` =  Api\\Parser\\JsonApiParser::class      ]);    Note: When you choose a specific Serializer, it is adviced to use the same named Parser. This way the output structure strokes with the input structure.", 
+            "title": "Parsers"
         }, 
         {
             "location": "/events/", 
