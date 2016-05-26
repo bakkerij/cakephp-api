@@ -22,7 +22,7 @@ To get started you need to load the `ApiBuilder` Component:
 ```
 class BlogsController extends AppController
 {
-    use Api\Controller\ApiControllerTrait;
+    use \Api\Controller\ApiControllerTrait;
 
     public function initialize()
     {
@@ -32,7 +32,7 @@ class BlogsController extends AppController
             'actions' => [
                 'index' => 'Api.Index',
                 'view' => 'Api.View',
-                'add' => 'Api.Add'
+                'add' => 'Api.Add',
                 'edit' => 'Api.Edit',
                 'delete' => 'Api.Delete',
             ]

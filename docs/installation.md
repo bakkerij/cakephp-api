@@ -24,7 +24,7 @@ You can fix this by adding the following to your `composer.json`:
 
 ## Loading the plugin
 
-Add the following to your /config/bootstrap.php
+Add the following to your `/config/bootstrap.php`:
 
 ```
 Plugin::load('Api');
@@ -33,7 +33,7 @@ Plugin::load('Api');
 Or execute the following cake command:
 
 ```
-$ bin/cake plugin install -b -r Api
+$ bin/cake plugin load -b -r Api
 ```
 
 ## Configuring the controller
