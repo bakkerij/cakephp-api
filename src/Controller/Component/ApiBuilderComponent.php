@@ -13,7 +13,6 @@
  */
 namespace Api\Controller\Component;
 
-use Api\Exception\MissingTransformerException;
 use Api\Pagination\CakePaginatorAdapter;
 use Api\Parser\ParserAbstract;
 use Api\Traits\TransformerAwareTrait;
