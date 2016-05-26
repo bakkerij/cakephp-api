@@ -15,6 +15,13 @@ The recommended installation method for this plugin is by using composer.
 $ composer require cakeplugins/api
 ```
 
+> Note: By this time the plugin isn't stable yet. Many users get the error **"Could not find package cakeplugins/api at any version for your minimum-stability (stable)"**.
+You can fix this by adding the following to your `composer.json`: 
+
+```
+"minimum-stability": "dev"
+```
+
 ## Loading the plugin
 
 Add the following to your /config/bootstrap.php
