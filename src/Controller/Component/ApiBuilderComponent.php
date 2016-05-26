@@ -14,6 +14,7 @@
 namespace Api\Controller\Component;
 
 use Api\Pagination\CakePaginatorAdapter;
+use Api\Parser\DataArrayParser;
 use Api\Parser\ParserAbstract;
 use Api\Traits\TransformerAwareTrait;
 use Api\Transformer\Transformer;
@@ -54,7 +55,7 @@ class ApiBuilderComponent extends Component
         'serializer' => DataArraySerializer::class,
         'recursionLimit' => '10',
         'baseUrl' => null,
-        'parser' => '',
+        'parser' => DataArrayParser::class,
         'paginator' => CakePaginatorAdapter::class,
     ];
 
