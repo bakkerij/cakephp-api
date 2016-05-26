@@ -336,6 +336,14 @@
 </pre></div>
 
 
+<blockquote>
+<p>Note: By this time the plugin isn't stable yet. Many users get the error <strong>"Could not find package cakeplugins/api at any version for your minimum-stability (stable)"</strong>.
+You can fix this by adding the following to your <code>composer.json</code>: </p>
+</blockquote>
+<div class="code"><pre><span></span>&quot;minimum-stability&quot;: &quot;dev&quot;
+</pre></div>
+
+
 <h2 id="loading-the-plugin">Loading the plugin</h2>
 <p>Add the following to your /config/bootstrap.php</p>
 <div class="code"><pre><span></span><span class="nt">Plugin</span><span class="o">:</span><span class="nd">:load</span><span class="o">(</span><span class="s1">&#39;Api&#39;</span><span class="o">);</span>
