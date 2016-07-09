@@ -27,8 +27,8 @@
       <link rel="apple-touch-icon" href="../images/logo.png">
     
     
-    <link rel="shortcut icon" type="image/x-icon" href="../None">
-    <link rel="icon" type="image/x-icon" href="../None">
+    <link rel="shortcut icon" type="image/x-icon" href="../assets/images/favicon-e565ddfa3b.ico">
+    <link rel="icon" type="image/x-icon" href="../assets/images/favicon-e565ddfa3b.ico">
     <style>
       @font-face {
       	font-family: 'Icon';
@@ -45,7 +45,7 @@
       	font-style: normal;
       }
     </style>
-    <link rel="stylesheet" href="../assets/stylesheets/application-54f87043f3.css">
+    <link rel="stylesheet" href="../assets/stylesheets/application-a422ff04cc.css">
     
       <link rel="stylesheet" href="../assets/stylesheets/palettes-05ab2406df.css">
     
@@ -53,7 +53,7 @@
       
       
       
-      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu:400,700|Ubuntu+Mono">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,700|Ubuntu+Mono">
       <style>
         body, input {
           font-family: 'Ubuntu', Helvetica, Arial, sans-serif;
@@ -108,7 +108,7 @@
     
       
       <div class="button button-github" role="button" aria-label="GitHub">
-        <a href="https://github.com/cakeplugins" title="@cakeplugins on GitHub" target="_blank" class="toggle-button icon icon-github"></a>
+        <a href="https://github.com/bakkerij" title="@bakkerij on GitHub" target="_blank" class="toggle-button icon icon-github"></a>
       </div>
     
     <div class="button button-search" role="button" aria-label="Search">
@@ -135,7 +135,7 @@
       <div class="drawer">
         <nav aria-label="Navigation">
   
-  <a href="https://github.com/cakeplugins/api" class="project">
+  <a href="https://github.com/bakkerij/api" class="project">
     <div class="banner">
       
         <div class="logo">
@@ -151,7 +151,7 @@
         </strong>
         
           <br>
-          cakeplugins/api
+          bakkerij/api
         
       </div>
     </div>
@@ -162,12 +162,12 @@
         <ul class="repo">
           <li class="repo-download">
             
-            <a href="https://github.com/cakeplugins/api/archive/master.zip" target="_blank" title="Download" data-action="download">
+            <a href="https://github.com/bakkerij/api/archive/master.zip" target="_blank" title="Download" data-action="download">
               <i class="icon icon-download"></i> Download
             </a>
           </li>
           <li class="repo-stars">
-            <a href="https://github.com/cakeplugins/api/stargazers" target="_blank" title="Stargazers" data-action="star">
+            <a href="https://github.com/bakkerij/api/stargazers" target="_blank" title="Stargazers" data-action="star">
               <i class="icon icon-star"></i> Stars
               <span class="count">&ndash;</span>
             </a>
@@ -332,8 +332,8 @@
             
               
               <li>
-                <a href="https://github.com/cakeplugins" target="_blank" title="@cakeplugins on GitHub">
-                  @cakeplugins on GitHub
+                <a href="https://github.com/bakkerij" target="_blank" title="@bakkerij on GitHub">
+                  @bakkerij on GitHub
                 </a>
               </li>
             
@@ -357,24 +357,22 @@
 <li><code>Api.Delete</code></li>
 </ul>
 <p>You can load those actions when loading the <code>ApiBuilder</code> Component:</p>
-<div class="code"><pre><span></span><span class="x">    </span><span class="p">$</span><span class="nv">this</span><span class="x">-&gt;loadComponent(&#39;Api.ApiBuilder&#39;, [</span>
-<span class="x">        &#39;actions&#39; =&gt; [</span>
-<span class="x">            &#39;index&#39; =&gt; &#39;Api.Index&#39;,</span>
-<span class="x">            &#39;view&#39; =&gt; &#39;Api.View&#39;,</span>
-<span class="x">            &#39;add&#39; =&gt; &#39;Api.Add&#39;</span>
-<span class="x">            &#39;edit&#39; =&gt; &#39;Api.Edit&#39;,</span>
-<span class="x">            &#39;delete&#39; =&gt; &#39;Api.Delete&#39;,</span>
-<span class="x">        ]</span>
-<span class="x">    ]);</span>
-</pre></div>
+<pre class="code"><code>    $this-&gt;loadComponent('Api.ApiBuilder', [
+        'actions' =&gt; [
+            'index' =&gt; 'Api.Index',
+            'view' =&gt; 'Api.View',
+            'add' =&gt; 'Api.Add'
+            'edit' =&gt; 'Api.Edit',
+            'delete' =&gt; 'Api.Delete',
+        ]
+    ]);</code></pre>
 
 
 <p>All Action classes extend on the <code>Api\Action\ApiAction</code> class.</p>
 <h2 id="general-methods">General methods</h2>
 <p>The <code>Action</code> classes heve some usefull methods.</p>
 <p>To set a status code you can use the following example:</p>
-<div class="code"><pre><span></span><span class="p">$</span><span class="nv">this</span><span class="x">-&gt;statusCode(201);</span>
-</pre></div>
+<pre class="code"><code>$this-&gt;statusCode(201);</code></pre>
 
 
 <blockquote>
@@ -382,32 +380,27 @@
 </blockquote>
 <h2 id="fractal-related-methods">Fractal related methods</h2>
 <p>The <code>Manager</code> class of Fractal is accessible with the method:</p>
-<div class="code"><pre><span></span><span class="p">$</span><span class="nv">manager</span><span class="x"> = </span><span class="p">$</span><span class="nv">this</span><span class="x">-&gt;_fractal();</span>
-</pre></div>
+<pre class="code"><code>$manager = $this-&gt;_fractal();</code></pre>
 
 
 <p>You can easily get the related Transformer instance like:</p>
-<div class="code"><pre><span></span><span class="p">$</span><span class="nv">transformer</span><span class="x"> = </span><span class="p">$</span><span class="nv">this</span><span class="x">-&gt;_transformer();</span>
-</pre></div>
+<pre class="code"><code>$transformer = $this-&gt;_transformer();</code></pre>
 
 
 <p>This can be helpful when you want to transform an Item or a Collection:</p>
-<div class="code"><pre><span></span><span class="p">$</span><span class="nv">result</span><span class="x"> = </span><span class="p">$</span><span class="nv">this</span><span class="x">-&gt;collection(</span><span class="p">$</span><span class="nv">data</span><span class="x">, </span><span class="p">$</span><span class="nv">this</span><span class="x">-&gt;_transformer());</span>
-</pre></div>
+<pre class="code"><code>$result = $this-&gt;collection($data, $this-&gt;_transformer());</code></pre>
 
 
 <p>As you see collections and items can be build with the following methods:</p>
-<div class="code"><pre><span></span><span class="x">// Return a collection</span>
-<span class="p">$</span><span class="nv">result</span><span class="x"> = </span><span class="p">$</span><span class="nv">this</span><span class="x">-&gt;collection(</span><span class="p">$</span><span class="nv">data</span><span class="x">, &#39;Blog&#39;);</span>
+<pre class="code"><code>// Return a collection
+$result = $this-&gt;collection($data, 'Blog');
 
-<span class="x">// Return an item</span>
-<span class="p">$</span><span class="nv">result</span><span class="x"> = </span><span class="p">$</span><span class="nv">this</span><span class="x">-&gt;item(</span><span class="p">$</span><span class="nv">data</span><span class="x">, &#39;Blog&#39;);</span>
-</pre></div>
+// Return an item
+$result = $this-&gt;item($data, 'Blog');</code></pre>
 
 
 <p>To 'create' the data to a returnable format you can use the <code>createData</code> method like:</p>
-<div class="code"><pre><span></span><span class="p">$</span><span class="nv">data</span><span class="x"> = </span><span class="p">$</span><span class="nv">this</span><span class="x">-&gt;createData(</span><span class="p">$</span><span class="nv">result</span><span class="x">)-&gt;toArray();</span>
-</pre></div>
+<pre class="code"><code>$data = $this-&gt;createData($result)-&gt;toArray();</code></pre>
 
 
 <p>This result should be used as response data.</p>
@@ -446,7 +439,7 @@
 <p>Read more about actions <a href="http://crud.readthedocs.io/en/latest/actions.html">here</a></p>
           <aside class="copyright" role="note">
             
-              Copyright (c) 2016 CakePlugins - Bob Mulder &ndash;
+              Copyright (c) 2016 Bakkerij - Bob Mulder &ndash;
             
             Documentation built with
             <a href="http://www.mkdocs.org" target="_blank">MkDocs</a>
@@ -515,7 +508,7 @@
     </main>
     <script>
       var base_url = '..';
-      var repo_id  = 'cakeplugins/api';
+      var repo_id  = 'bakkerij/api';
     </script>
     <script src="../assets/javascripts/application-997097ee0c.js"></script>
     
@@ -527,7 +520,7 @@
           m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;
           m.parentNode.insertBefore(a,m)
         })(window, document,
-          'script', '//www.google-analytics.com/analytics.js', 'ga');
+          'script', 'https://www.google-analytics.com/analytics.js', 'ga');
         /* General initialization */
         ga('create', 'UA-60091820-3', 'auto');
         ga('set', 'anonymizeIp', true);

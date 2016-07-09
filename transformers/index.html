@@ -27,8 +27,8 @@
       <link rel="apple-touch-icon" href="../images/logo.png">
     
     
-    <link rel="shortcut icon" type="image/x-icon" href="../None">
-    <link rel="icon" type="image/x-icon" href="../None">
+    <link rel="shortcut icon" type="image/x-icon" href="../assets/images/favicon-e565ddfa3b.ico">
+    <link rel="icon" type="image/x-icon" href="../assets/images/favicon-e565ddfa3b.ico">
     <style>
       @font-face {
       	font-family: 'Icon';
@@ -45,7 +45,7 @@
       	font-style: normal;
       }
     </style>
-    <link rel="stylesheet" href="../assets/stylesheets/application-54f87043f3.css">
+    <link rel="stylesheet" href="../assets/stylesheets/application-a422ff04cc.css">
     
       <link rel="stylesheet" href="../assets/stylesheets/palettes-05ab2406df.css">
     
@@ -53,7 +53,7 @@
       
       
       
-      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu:400,700|Ubuntu+Mono">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,700|Ubuntu+Mono">
       <style>
         body, input {
           font-family: 'Ubuntu', Helvetica, Arial, sans-serif;
@@ -108,7 +108,7 @@
     
       
       <div class="button button-github" role="button" aria-label="GitHub">
-        <a href="https://github.com/cakeplugins" title="@cakeplugins on GitHub" target="_blank" class="toggle-button icon icon-github"></a>
+        <a href="https://github.com/bakkerij" title="@bakkerij on GitHub" target="_blank" class="toggle-button icon icon-github"></a>
       </div>
     
     <div class="button button-search" role="button" aria-label="Search">
@@ -135,7 +135,7 @@
       <div class="drawer">
         <nav aria-label="Navigation">
   
-  <a href="https://github.com/cakeplugins/api" class="project">
+  <a href="https://github.com/bakkerij/api" class="project">
     <div class="banner">
       
         <div class="logo">
@@ -151,7 +151,7 @@
         </strong>
         
           <br>
-          cakeplugins/api
+          bakkerij/api
         
       </div>
     </div>
@@ -162,12 +162,12 @@
         <ul class="repo">
           <li class="repo-download">
             
-            <a href="https://github.com/cakeplugins/api/archive/master.zip" target="_blank" title="Download" data-action="download">
+            <a href="https://github.com/bakkerij/api/archive/master.zip" target="_blank" title="Download" data-action="download">
               <i class="icon icon-download"></i> Download
             </a>
           </li>
           <li class="repo-stars">
-            <a href="https://github.com/cakeplugins/api/stargazers" target="_blank" title="Stargazers" data-action="star">
+            <a href="https://github.com/bakkerij/api/stargazers" target="_blank" title="Stargazers" data-action="star">
               <i class="icon icon-star"></i> Stars
               <span class="count">&ndash;</span>
             </a>
@@ -308,8 +308,8 @@
             
               
               <li>
-                <a href="https://github.com/cakeplugins" target="_blank" title="@cakeplugins on GitHub">
-                  @cakeplugins on GitHub
+                <a href="https://github.com/bakkerij" target="_blank" title="@bakkerij on GitHub">
+                  @bakkerij on GitHub
                 </a>
               </li>
             
@@ -330,8 +330,7 @@
 <h2 id="getting-transformers">Getting Transformers</h2>
 <h2 id="bake">Bake</h2>
 <p>You can easily bake Transformers with the command:</p>
-<div class="code"><pre><span></span>$ bin/cake bake transformer Blog
-</pre></div>
+<pre class="code"><code>$ bin/cake bake transformer Blog</code></pre>
 
 
 <p>Note that you should add Transformers in singular form.</p>
@@ -342,79 +341,78 @@
 </ul>
 <h3 id="result">Result</h3>
 <p>The result will look like:</p>
-<div class="code"><pre><span></span><span class="x">namespace App\Transformer;</span>
+<pre class="code"><code>namespace App\Transformer;
 
-<span class="x">use Api\Transformer\TransformerAbstract;</span>
-<span class="x">use App\Model\Entity\Blog;</span>
+use Bakkerij\Api\Transformer\TransformerAbstract;
+use App\Model\Entity\Blog;
 
-<span class="x">/**</span>
-<span class="x"> * Blog transformer.</span>
-<span class="x"> */</span>
-<span class="x">class BlogTransformer extends TransformerAbstract</span>
-<span class="err">{</span><span class="x"></span>
+/**
+ * Blog transformer.
+ */
+class BlogTransformer extends TransformerAbstract
+{
 
-<span class="x">    /**</span>
-<span class="x">     * Getter for the resourceKey.</span>
-<span class="x">     *</span>
-<span class="x">     * @return string</span>
-<span class="x">     */</span>
-<span class="x">    public function resourceKey()</span>
-<span class="x">    </span><span class="err">{</span><span class="x"></span>
-<span class="x">        return &#39;blogs&#39;;</span>
-<span class="x">    }</span>
+    /**
+     * Getter for the resourceKey.
+     *
+     * @return string
+     */
+    public function resourceKey()
+    {
+        return 'blogs';
+    }
 
-<span class="x">    /**</span>
-<span class="x">     * List of resources possible to include</span>
-<span class="x">     *</span>
-<span class="x">     * @var array</span>
-<span class="x">     */</span>
-<span class="x">    protected </span><span class="p">$</span><span class="nv">availableIncludes</span><span class="x"> = [</span>
-<span class="x">        &#39;categories&#39;</span>
-<span class="x">    ];</span>
+    /**
+     * List of resources possible to include
+     *
+     * @var array
+     */
+    protected $availableIncludes = [
+        'categories'
+    ];
 
-<span class="x">    /**</span>
-<span class="x">     * Transformer</span>
-<span class="x">     *</span>
-<span class="x">     * @param Blog </span><span class="p">$</span><span class="nv">entity</span><span class="x"> Item.</span>
-<span class="x">     * @return array</span>
-<span class="x">     */</span>
-<span class="x">    public function transform(Blog </span><span class="p">$</span><span class="nv">entity</span><span class="x">)</span>
-<span class="x">    </span><span class="err">{</span><span class="x"></span>
-<span class="x">        return [</span>
-<span class="x">            &#39;id&#39; =&gt; </span><span class="p">$</span><span class="nv">entity</span><span class="x">-&gt;get(&#39;id&#39;),</span>
-<span class="x">            &#39;name&#39; =&gt; </span><span class="p">$</span><span class="nv">entity</span><span class="x">-&gt;get(&#39;name&#39;),</span>
-<span class="x">            &#39;body&#39; =&gt; </span><span class="p">$</span><span class="nv">entity</span><span class="x">-&gt;get(&#39;body&#39;),</span>
-<span class="x">            &#39;category_id&#39; =&gt; </span><span class="p">$</span><span class="nv">entity</span><span class="x">-&gt;get(&#39;category_id&#39;),</span>
-<span class="x">            &#39;created&#39; =&gt; </span><span class="p">$</span><span class="nv">entity</span><span class="x">-&gt;get(&#39;created&#39;),</span>
-<span class="x">            &#39;modified&#39; =&gt; </span><span class="p">$</span><span class="nv">entity</span><span class="x">-&gt;get(&#39;modified&#39;),</span>
-<span class="x">        ];</span>
-<span class="x">    }</span>
+    /**
+     * Transformer
+     *
+     * @param Blog $entity Item.
+     * @return array
+     */
+    public function transform(Blog $entity)
+    {
+        return [
+            'id' =&gt; $entity-&gt;get('id'),
+            'name' =&gt; $entity-&gt;get('name'),
+            'body' =&gt; $entity-&gt;get('body'),
+            'category_id' =&gt; $entity-&gt;get('category_id'),
+            'created' =&gt; $entity-&gt;get('created'),
+            'modified' =&gt; $entity-&gt;get('modified'),
+        ];
+    }
 
-<span class="x">    /**</span>
-<span class="x">     * Include Category</span>
-<span class="x">     *</span>
-<span class="x">     * @param Blog </span><span class="p">$</span><span class="nv">entity</span><span class="x"></span>
-<span class="x">     * @return \League\Fractal\Resource\Item</span>
-<span class="x">     */</span>
-<span class="x">    public function includeCategory(</span><span class="p">$</span><span class="nv">entity</span><span class="x">)</span>
-<span class="x">    </span><span class="err">{</span><span class="x"></span>
-<span class="x">        </span><span class="p">$</span><span class="nv">table</span><span class="x"> = </span><span class="p">$</span><span class="nv">this</span><span class="x">-&gt;_repository(</span><span class="p">$</span><span class="nv">entity</span><span class="x">);</span>
-<span class="x">        </span><span class="p">$</span><span class="nv">association</span><span class="x"> = </span><span class="p">$</span><span class="nv">table</span><span class="x">-&gt;associations()-&gt;getByProperty(&#39;category&#39;);</span>
+    /**
+     * Include Category
+     *
+     * @param Blog $entity
+     * @return \League\Fractal\Resource\Item
+     */
+    public function includeCategory($entity)
+    {
+        $table = $this-&gt;_repository($entity);
+        $association = $table-&gt;associations()-&gt;getByProperty('category');
 
-<span class="x">        </span><span class="p">$</span><span class="nv">table</span><span class="x">-&gt;loadInto(</span><span class="p">$</span><span class="nv">entity</span><span class="x">, [</span><span class="p">$</span><span class="nv">association</span><span class="x">-&gt;name()]);</span>
+        $table-&gt;loadInto($entity, [$association-&gt;name()]);
 
-<span class="x">        return </span><span class="p">$</span><span class="nv">this</span><span class="x">-&gt;item(</span><span class="p">$</span><span class="nv">entity</span><span class="x">-&gt;get(&#39;category&#39;), &#39;Category&#39;);</span>
-<span class="x">    }</span>
+        return $this-&gt;item($entity-&gt;get('category'), 'Category');
+    }
 
-<span class="x">}</span>
-</pre></div>
+}</code></pre>
 
 
 <h2 id="read-more">Read more</h2>
 <p>You can read more about Transformers at <a href="http://fractal.thephpleague.com/transformers/">the docs of Fractal</a>.</p>
           <aside class="copyright" role="note">
             
-              Copyright (c) 2016 CakePlugins - Bob Mulder &ndash;
+              Copyright (c) 2016 Bakkerij - Bob Mulder &ndash;
             
             Documentation built with
             <a href="http://www.mkdocs.org" target="_blank">MkDocs</a>
@@ -483,7 +481,7 @@
     </main>
     <script>
       var base_url = '..';
-      var repo_id  = 'cakeplugins/api';
+      var repo_id  = 'bakkerij/api';
     </script>
     <script src="../assets/javascripts/application-997097ee0c.js"></script>
     
@@ -495,7 +493,7 @@
           m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;
           m.parentNode.insertBefore(a,m)
         })(window, document,
-          'script', '//www.google-analytics.com/analytics.js', 'ga');
+          'script', 'https://www.google-analytics.com/analytics.js', 'ga');
         /* General initialization */
         ga('create', 'UA-60091820-3', 'auto');
         ga('set', 'anonymizeIp', true);
