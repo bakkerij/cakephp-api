@@ -1,8 +1,8 @@
 <?php
-namespace Api\Shell\Task;
+
+namespace Bakkerij\Api\Shell\Task;
 
 use Bake\Shell\Task\SimpleBakeTask;
-use Cake\Console\Shell;
 use Cake\Core\App;
 use Cake\ORM\Association;
 use Cake\ORM\Association\BelongsTo;

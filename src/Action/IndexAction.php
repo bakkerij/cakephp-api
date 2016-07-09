@@ -1,6 +1,6 @@
 <?php
 
-namespace Api\Action;
+namespace Bakkerij\Api\Action;
 
 use App\Transformer\CategoryTransformer;
 use Crud\Traits\FindMethodTrait;

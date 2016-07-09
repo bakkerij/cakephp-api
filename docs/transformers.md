@@ -31,7 +31,7 @@ The result will look like:
 ```
 namespace App\Transformer;
 
-use Api\Transformer\TransformerAbstract;
+use Bakkerij\Api\Transformer\TransformerAbstract;
 use App\Model\Entity\Blog;
 
 /**

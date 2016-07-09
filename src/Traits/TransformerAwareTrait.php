@@ -1,9 +1,9 @@
 <?php
 
-namespace Api\Traits;
+namespace Bakkerij\Api\Traits;
 
-use Api\Core\Exception\MissingTransformerException;
-use Api\Transformer\TransformerAbstract;
+use Bakkerij\Api\Core\Exception\MissingTransformerException;
+use Bakkerij\Api\Transformer\TransformerAbstract;
 use Cake\Core\App;
 use Cake\Utility\Inflector;
 
@@ -26,7 +26,7 @@ trait TransformerAwareTrait
         $transformer = App::className(Inflector::classify($className), 'Transformer', 'Transformer');
 
         if ($transformer === false) {
-            throw new MissingTransformerException(['transformer' => $className]);
+            throw new MissingTransformerException(['transformer' => Inflector::classify($className)]);
         }
 
         return new $transformer;

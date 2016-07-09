@@ -1,6 +1,6 @@
 <?php
 
-namespace Api\Action;
+namespace Bakkerij\Api\Action;
 
 class DeleteAction extends Action
 {

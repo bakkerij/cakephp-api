@@ -9,10 +9,10 @@ theme: 'material'
 
 # Repository
 repo_name: 'GitHub'
-repo_url: 'https://github.com/cakeplugins/api'
+repo_url: 'https://github.com/bakkerij/api'
 
 # Copyright
-copyright: 'Copyright (c) 2016 CakePlugins - Bob Mulder'
+copyright: 'Copyright (c) 2016 Bakkerij - Bob Mulder'
 
 # Menu
 pages:
@@ -33,7 +33,7 @@ extra:
     accent: 'grey'
   logo: 'images/logo.png'
   author:
-    github: 'cakeplugins'
+    github: 'bakkerij'
     twitter: 'cakeplugins'
 
 # Google Analytics

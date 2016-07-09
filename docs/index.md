@@ -18,4 +18,4 @@ It's built on top of proven technologies:
 
 ## Questions?
 
-You can get in touch via [Gitter](https://gitter.im/cakeplugins/api). Other questions or issues can be issued [here](https://github.com/cakeplugins/api/issues).
+You can get in touch via [Gitter](https://gitter.im/bakkerij/cakephp-api). Other questions or issues can be issued [here](https://github.com/bakkerij/cakephp-api/issues).

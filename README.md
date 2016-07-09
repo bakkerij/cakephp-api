@@ -16,11 +16,11 @@ You can install this plugin into your CakePHP application using [composer](http:
 The recommended way to install composer packages is:
 
 ```
-composer require cakeplugins/api
+composer require bakkerij/cakephp-api
 ```
 
 Now load the plugin with the following command:
 
 ```
-bin\cake  plugin load -b -r api
+bin\cake  plugin load -b -r Bakkerij/Api
 ```

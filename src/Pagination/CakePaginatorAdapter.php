@@ -1,6 +1,6 @@
 <?php
 
-namespace Api\Pagination;
+namespace Bakkerij\Api\Pagination;
 
 use Cake\Controller\Component\PaginatorComponent;
 use Cake\Network\Request;

@@ -12,10 +12,10 @@ In this section we will explain how to install this plugin.
 The recommended installation method for this plugin is by using composer.
 
 ```
-$ composer require cakeplugins/api
+$ composer require bakkerij/cakephp-api
 ```
 
-> Note: By this time the plugin isn't stable yet. Many users get the error **"Could not find package cakeplugins/api at any version for your minimum-stability (stable)"**.
+> Note: By this time the plugin isn't stable yet. Many users get the error **"Could not find package bakkerij/cakephp-api at any version for your minimum-stability (stable)"**.
 You can fix this by adding the following to your `composer.json`: 
 
 ```
@@ -45,7 +45,7 @@ namespace App\Controller;
 
 class AppController extends Controller
 {
-    use Api\Controller\ApiControllerTrait;
+    use Bakkerij\Api\Controller\ApiControllerTrait;
 
 }
 ```
@@ -60,7 +60,7 @@ Now you have to load the `ApiBuilder` component in the controller. Example:
 ```
 class AppController extends \Cake\Controller\Controller
 {
-    use Api\Controller\ApiControllerTrait;
+    use Bakkerij\Api\Controller\ApiControllerTrait;
 
     public function initialize()
     {

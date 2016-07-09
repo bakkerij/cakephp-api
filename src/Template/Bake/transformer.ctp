@@ -4,7 +4,7 @@ use Cake\Utility\Inflector;
 <?php
 namespace <%= $namespace %>\Transformer;
 
-use Api\Transformer\TransformerAbstract;
+use Bakkerij\Api\Transformer\TransformerAbstract;
 use <%= $entity_namespace %>;
 
 /**

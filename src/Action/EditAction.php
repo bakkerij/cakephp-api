@@ -1,6 +1,6 @@
 <?php
 
-namespace Api\Action;
+namespace Bakkerij\Api\Action;
 
 use Crud\Traits\FindMethodTrait;
 

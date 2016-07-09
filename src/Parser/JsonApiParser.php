@@ -1,6 +1,6 @@
 <?php
 
-namespace Api\Parser;
+namespace Bakkerij\Api\Parser;
 
 use Cake\Network\Request;
 

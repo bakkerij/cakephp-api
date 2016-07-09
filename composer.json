@@ -1,5 +1,5 @@
 {
-  "name": "cakeplugins/api",
+  "name": "bakkerij/cakephp-api",
   "description": "Api plugin for CakePHP",
   "type": "cakephp-plugin",
   "require": {
@@ -13,12 +13,12 @@
   },
   "autoload": {
     "psr-4": {
-      "Api\\": "src"
+      "Bakkerij\\Api\\": "src"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "Api\\Test\\": "tests",
+      "Bakkerij\\Api\\Test\\": "tests",
       "Cake\\Test\\": "./vendor/cakephp/cakephp/tests"
     }
   }
