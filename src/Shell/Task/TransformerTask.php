@@ -139,7 +139,7 @@ class TransformerTask extends SimpleBakeTask
      */
     public function template()
     {
-        return 'Api.transformer';
+        return 'Bakkerij/Api.transformer';
     }
 
     public function getOptionParser()
