@@ -25,8 +25,6 @@ class AddAction extends Action
      */
     protected function _post()
     {
-        $manager = $this->_fractal();
-
         $subject = $this->_subject([
             'entity' => $this->_entity($this->_api()->getRequestData(), $this->config('saveOptions')),
             'saveMethod' => $this->config('saveMethod'),
@@ -37,16 +35,30 @@ class AddAction extends Action
         $saveCallback = [$this->_table(), $subject->saveMethod];
 
         if (call_user_func($saveCallback, $subject->entity, $subject->saveOptions)) {
-            $this->statusCode(201);
-
-            $resource = $this->item($subject->entity, $this->_transformer());
-            $data = $manager->createData($resource)->toArray();
-            $this->_controller()->set($data);
+            return $this->_success($subject);
         } else {
-            $this->statusCode(400);
-
-            $this->_controller()->set('errors', $subject->entity->errors());
+            return $this->_error($subject);
         }
+    }
+
+    protected function _success()
+    {
+        $this->statusCode(201);
+
+        $this->_trigger('afterSave', $subject);
+
+        $resource = $this->item($subject->entity, $this->_transformer());
+        $data = $this->_fractal()->createData($resource)->toArray();
+        $this->_controller()->set($data);
+    }
+
+    protected function _error() 
+    {
+        $this->statusCode(400);
+
+        $this->_trigger('afterSave', $subject);
+
+        $this->_controller()->set('errors', $subject->entity->errors());
     }
 
     protected function _put()
