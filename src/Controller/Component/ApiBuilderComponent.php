@@ -121,7 +121,7 @@ class ApiBuilderComponent extends Component
             $serializer = $this->config('serializer');
             $manager->setSerializer(new $serializer($this->config('baseUrl') ?: Router::fullBaseUrl()));
 
-            $manager->parseIncludes((array)$this->request->query('include'));
+            $manager->parseIncludes((array)explode(',', $this->request->query('include')));
             $manager->setRecursionLimit($this->config('recursionLimit'));
 
             $this->_fractalManager = $manager;
