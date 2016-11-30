@@ -41,7 +41,7 @@ class AddAction extends Action
         }
     }
 
-    protected function _success()
+    protected function _success($subject)
     {
         $this->statusCode(201);
 
@@ -52,7 +52,7 @@ class AddAction extends Action
         $this->_controller()->set($data);
     }
 
-    protected function _error() 
+    protected function _error($subject) 
     {
         $this->statusCode(400);
 
