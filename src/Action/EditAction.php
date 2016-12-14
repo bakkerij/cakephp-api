@@ -58,9 +58,9 @@ class EditAction extends Action
         }
     }
 
-    protected function _post()
+    protected function _post($id = null)
     {
-        $this->_put();
+        $this->_put($id);
     }
 
 }
